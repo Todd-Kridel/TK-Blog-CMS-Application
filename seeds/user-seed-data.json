@@ -1,0 +1,35 @@
+
+
+[
+  {
+    "first_name": "USER1",
+    "last_name": "TEST1",
+    "email_address": "user1.test1@gmail.com",
+    "password": "P@ssw0rd1"
+  }, 
+  {
+    "first_name": "USER2",
+    "last_name": "TEST2",
+    "email_address": "user2.test2@gmail.com",
+    "password": "P@ssw0rd2"
+  },
+  {
+    "first_name": "USER3",
+    "last_name": "TEST3",
+    "email_address": "user3.test3@gmail.com",
+    "password": "P@ssw0rd3"
+  }, 
+  {
+    "first_name": "USER4",
+    "last_name": "TEST4",
+    "email_address": "user4.test4@gmail.com",
+    "password": "P@ssw0rd4"
+  }, 
+  {
+    "first_name": "USER5",
+    "last_name": "TEST5",
+    "email_address": "user5.test5@gmail.com",
+    "password": "P@ssw0rd5"
+  }
+]
+

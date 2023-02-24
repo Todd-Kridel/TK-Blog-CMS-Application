@@ -1,0 +1,79 @@
+
+
+<style>  /* This separate and smaller and inline CSS section allows for the logoff screen to be 
+  rendered in a style-consistent way without the usage of the main Handlebars container template 
+  that contains logon user session information that does not clear/refresh at the appropriate 
+  immediate time when the logoff function is clicked (which was a misleading remnant display of
+  information). */
+  
+
+:root {
+  --light-green-background: #90beab; 
+  --light-gray-button: rgb(172, 172, 172);
+  --dark-gray-header: rgb(100,100, 100);
+  --dark-blue-border: rgb(25, 25, 100);
+}
+
+html {
+  margin: 5px;
+}
+
+.bordered_section_body {
+  border: 1px solid var(--dark-blue-border);
+  padding: 5px;
+}
+
+body {
+  background-color: var(--light-green-background);
+  color: black; 
+  font-family: 'Modern', 'Comic Sans MS', sans-serif, Arial;
+}
+
+p {
+  font-family: 'Modern', 'Comic Sans MS', sans-serif, Arial;
+  margin: 5px;
+}
+
+button {
+  background-color: var(--light-gray-button);
+  color: black;
+  border: 2px solid lightblue;
+  font-family: 'Modern', 'Comic Sans MS', sans-serif, Arial;
+  padding: 5px;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: var(--light-gray-button);
+  color: white;
+  border: 2px solid lightblue;
+}
+
+button:active {
+  color: yellow;
+}
+
+
+</style>
+
+
+<br>
+<br>
+<div class="bordered_section_body">
+  <br>
+  <br>
+  <p>You have been logged-off of the system.</p>
+  <br>
+  <p>For security reasons...be sure to close your browser tab if you are done with the application.</p>
+  <br>
+  <hr>
+  <br>
+  <p>...Or...</p>
+  <br>
+  <button onclick="window.location.replace('/')">
+    &nbsp;Return to the Home Page Screen -- Main Blog Function List&nbsp;
+  </button>
+  <br>
+  <br>
+</div>
+

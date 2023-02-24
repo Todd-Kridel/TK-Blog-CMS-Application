@@ -1,0 +1,89 @@
+
+
+<div class="bordered_section_heading">
+  <br>
+  <h2>HOME PAGE</h2>
+  <br>
+</div>
+<div class="bordered_section_body">
+  <br>
+  <p class="">
+    <button onclick="window.location.replace('/blog/')" class="">
+      &nbsp;Find a Blog in a Gallery of All of the Current Existing Blogs&nbsp;
+    </button><br>
+    <br>
+    <button onclick="window.location.replace('/blog/title')" class="">
+      &nbsp;Find a Desired Specific Blog By Title Text Keyword&nbsp;
+    </button><br>
+    <br>
+    <button onclick="window.location.replace('/blog/author/id')" class="">
+      &nbsp;Find a Desired Specific Blog By Author&nbsp;
+    </button><br>
+    <br>
+    <button onclick="window.location.replace('/blog/gallery/id')" class="">
+      &nbsp;Find a Desired Specific Blog By ID&nbsp;
+    </button><br>
+  </p>
+  <br>
+  <hr>
+  <br>
+  <br>
+  <div class="bordered_section_body">
+    {{#if session.loggedIn}}
+    <br>
+    <p>Access the main <a href="/blog">Blog Gallery</a> screen to get to an extra "Add a Message" function (to create a new blog).</p>
+    <br>
+    {{else}}
+    <br>
+    <p><a href="/logon">Log-on</a> and access the main <a href="/blog">Blog Gallery</a> screen to get to an extra "Add a Message" function (to create a new blog).</p>
+    <br>
+    {{/if}}
+  </div>
+  <br>
+  <br>
+  <div class="bordered_section_body">
+    {{#if session.loggedIn}}
+    <br>
+    <p>Access a <a href="/blog">Blog Detail</a> screen from the main Blog Gallery screen to get to an extra "Update a Message" function.</p>
+    <br>
+    {{else}}
+    <br>
+    <p><a href="/logon">Log-on</a> and access a <a href="/blog">Blog Detail</a> screen of a blog record to get to an extra "Update a Message" function.</p>
+    <br>
+    {{/if}}
+  </div>
+  <br>
+  <br>
+  <div class="bordered_section_body">
+    {{#if session.loggedIn}}
+    <br>
+    <p>Access a <a href="/blog">Blog Detail</a> screen from the main Blog Gallery screen to get to an extra "Add/Update a Comment" function.</p>
+    <br>
+    {{else}}
+    <br>
+    <p><a href="/logon">Log-on</a> and access a <a href="/blog">Blog Detail</a> screen of a blog message to get to an extra "Add/Update a Comment" function.</p>
+    <br>
+    {{/if}}
+  </div>
+  <br>
+  <br>
+  <div class="bordered_section_body">
+    {{#if session.loggedIn}}
+    <br>
+    <p>Access your Blog Dashboard screen to see your own current blog messages and comments (if any).</p>
+    <br>
+    {{else}}
+    <br>
+    <p><a href="/logon">Log-on</a> and access your Blog Dashboard screen to see your own current blog messages and comments (if any).</p>
+    <br>
+    {{/if}}
+  </div>
+  <br>
+  <br>
+  <button type="button" class="" onclick="window.scrollTo(0, 0);">
+    &nbsp;Go to the Top of this Function Screen&nbsp;
+  </button><br>
+  <br>
+  <br>
+</div>
+

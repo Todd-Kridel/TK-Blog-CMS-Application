@@ -1,0 +1,86 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/reset.css" />
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="icon" type="image/ico" href="/css/favicon.ico" />
+<title>CMS Blog Site</title>
+</head>
+
+<body class="">
+
+<div class="">
+  <header>
+    <div>
+      <br>
+      {{#if session.loggedIn}}
+        <p style="text-align: center; margin: 0px; padding: 0px; color: yellow;">
+          Logged-On User: {{ session.loggedOnUserFullName }} (User ID: {{session.loggedOnUserID}})
+        </p>
+      {{else}}
+        <p></p>
+      {{/if}}
+      <br>
+    </div>
+    <div class="bordered_section_heading">
+      <br>
+      <h3 class="">MAIN MENU</h3>
+      <br>
+    </div>
+    <div class="bordered_section_body">
+      <nav class="button">
+        <br>
+        &nbsp;<a class="" aria-current="page" href="/">&nbsp;Home&nbsp;</a>&nbsp;
+        {{#if session.loggedIn}}
+        &nbsp;<a class="" href="/blog/dashboard/{{session.loggedOnUserID}}">&nbsp;Dashboard (Personal Posts)&nbsp;</a>&nbsp;
+        &nbsp;<a id="logoff-command" class="" href="/logoff">&nbsp;Logoff&nbsp;</a>&nbsp;
+        {{else}} 
+        &nbsp;<a id="logon-command" class="" href="/logon">&nbsp;Logon&nbsp;</a>&nbsp;&nbsp;(or Create a New User Account)&nbsp;
+        {{/if}}
+        <br>
+        <br>
+      </nav>
+    </div>
+    <div>
+      <br>
+      <br>
+      <h1>[[[[[[[[&nbsp;&nbsp;JUST&nbsp; BLOG&nbsp;IT!&nbsp;&nbsp;]]]]]]]]</h1>
+      <br>
+      <br>
+    </div>
+  </header>
+
+  {{{body}}}
+
+  <br>
+  <br>
+
+</div>
+
+<footer>
+{{#if session.loggedIn}}
+{{/if}}
+</footer>
+
+
+{{!-- <script src="./js/main-script-general.js"></script> --}}
+{{#if session.loggedIn}}
+<script>
+  //document.querySelector("#logoff-command").addEventListener("click", logoffProcessing);
+</script>
+{{else}}
+<script>
+  //document.querySelector("#logon-command").addEventListener("click", logonProcessing);
+</script>
+{{/if}}
+
+</body>
+
+</html>
+
