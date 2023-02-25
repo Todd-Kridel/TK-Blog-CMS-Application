@@ -28,3 +28,6 @@ const seedAll = async () => {
 
 seedAll();
 
+
+// HEROKU DATABASE: heroku run node ./seeds/index.js
+
