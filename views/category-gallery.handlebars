@@ -1,0 +1,31 @@
+
+
+<div class="bordered_section_heading">
+  <br>
+  <h2>CATEGORY GALLERY</h2>
+  <br>
+</div>
+<div class="bordered_section_body">
+  <hr>
+  <br>
+  {{#each categories as |category|}}
+    <p>Category Name: <a href="/blog/category/{{category.id}}">{{blog.category}}</a></p>
+    <br>
+    <button type="button" class="" onclick="window.scrollTo(0, 0);">
+      &nbsp;Back to the Top of the Category List&nbsp;
+    </button><br>
+    <br>
+    <button type="button" class="" onclick="history.back()">
+      &nbsp;Back to the Previous Screen&nbsp;
+    </button><br>
+    <br>
+    <button type="button" class="" onclick="window.location.replace('/blog');">
+      &nbsp;Back to the Main Blog Message List&nbsp;
+    </button><br>
+    <br>
+    <hr>
+    <br>
+  {{/each}}
+  <br>
+</div>
+

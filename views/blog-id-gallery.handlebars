@@ -1,0 +1,72 @@
+
+
+<div class="bordered_section_heading">
+  <br>
+  <h2>BLOG ID GALLERY</h2>
+  <br>
+</div>
+<div class="bordered_section_body">
+  <br>
+  <p>
+    <button id="blogIdSearchButton" onclick="blogIdSearchButtonProcessing();">
+      &nbsp;Find a Desired Specific Blog ID&nbsp; --->&nbsp;
+    </button>
+    &nbsp;&nbsp;Desired&nbsp;Blog&nbsp;ID&nbsp;(number):&nbsp;
+    <input id="blogIdSearchField" type="text" size="3"></input>
+  </p>
+  <br>
+  <p>Or select a blog ID from the gallery that is at below.</p>
+  <br>
+  <hr>
+  {{#each blogs as |blog|}}
+    <br>
+    <p>Blog Title: <a href="/blog/detail/{{id}}">{{blog.title}}</a></p>
+    <p>Blog ID: {{blog.id}}</p>
+    <br>
+    <hr>
+  {{/each}}
+  <br>
+  <button type="button" class="" onclick="window.scrollTo(0, 0);">
+    &nbsp;Go to the Top of this Blog ID List Screen&nbsp;
+  </button><br>
+  <br>
+  <button type="button" class="" onclick="window.location.replace('/');">
+    &nbsp;Go to the Home Page Screen -- Main Blog Function List&nbsp;
+  </button><br>
+  <br>
+    <button type="button" class="" onclick="window.location.replace('/blog');">
+      &nbsp;Go to the Blog Gallery Screen -- Main Blog Message List&nbsp;
+    </button><br>
+  <br>
+  {{!-- <button type="button" class="" onclick="history.back()">
+    &nbsp;Go to the Previous Screen&nbsp;
+  </button><br>
+  <br> --}}
+</div>
+
+
+<script>
+
+
+function blogIdSearchButtonProcessing() {
+  let blogId = parseInt(document.getElementById("blogIdSearchField").value);
+  if ((!isNaN(blogId) && (blogId > 0) && (Number.isInteger(blogId)))) {
+    //alert("blog ID: " + blogId);
+    window.location.replace("/blog/detail/" + blogId);
+  }
+  else {
+    alert("ERROR: The specified blog ID must be an integer number that is greater than 0.");
+  }
+}
+
+
+document.addEventListener("keydown", (event) => {
+  const keyName = event.key;
+  if (keyName === "Enter") {
+    blogIdSearchButtonProcessing();
+  }
+});
+
+
+</script>
+

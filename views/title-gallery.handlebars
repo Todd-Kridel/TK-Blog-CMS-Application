@@ -1,0 +1,72 @@
+
+
+<div class="bordered_section_heading">
+  <br>
+  <h2>TITLE GALLERY</h2>
+  <br>
+</div>
+<div class="bordered_section_body">
+  <br>
+  <p>
+    <button id="titleSearchStringButton" onclick="titleSearchStringButtonProcessing();">
+      &nbsp;Find a Desired Specific Title Character String&nbsp; --->&nbsp;
+    </button>
+    &nbsp;&nbsp;Desired&nbsp;Title&nbsp;Search&nbsp;String:&nbsp;
+    <input id="titleSearchStringField" type="text" size="32"></input>
+  </p>
+  <br>
+  <p>Or select a title from the gallery that is at below.</p>
+  <br>
+  <hr>
+  {{#each blogs as |blog|}}
+    <br>
+    <p>Title: <a href="/blog/detail/{{blog.id}}">{{blog.title}}</a></p>
+    <br>
+    <hr>
+  {{/each}}
+  <br>
+  <button type="button" class="" onclick="window.scrollTo(0, 0);">
+    &nbsp;Go to the Top of this Title List Screen&nbsp;
+  </button><br>
+  <br>
+  <button type="button" class="" onclick="window.location.replace('/');">
+    &nbsp;Go to the Home Page Screen -- Main Blog Function List&nbsp;
+  </button><br>
+  <br>
+    <button type="button" class="" onclick="window.location.replace('/blog');">
+      &nbsp;Go to the Blog Gallery Screen -- Main Blog Message List&nbsp;
+    </button><br>
+  <br>
+  {{!-- <button type="button" class="" onclick="history.back()">
+    &nbsp;Go to the Previous Screen&nbsp;
+  </button><br>
+  <br> --}}
+</div>
+
+
+<script>
+
+
+function titleSearchStringButtonProcessing() {
+  let searchString = document.getElementById("titleSearchStringField").value;
+  if (searchString != "") {
+    //alert("title search string: " + searchString + "; " + "/blog/title/" + "\"" + searchString + "\"");
+    window.location.replace("/blog/title/" + searchString);
+  }
+  else {
+    alert("ERROR: The specified title search string must have at least 1 character.");
+    window.location.replace("/blog/title/");
+  }
+}
+
+
+document.addEventListener("keydown", (event) => {
+  const keyName = event.key;
+  if (keyName === "Enter") {
+    titleSearchStringButtonProcessing();
+  }
+});
+
+
+</script>
+

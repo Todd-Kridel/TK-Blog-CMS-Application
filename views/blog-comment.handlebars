@@ -1,0 +1,38 @@
+
+
+<div class="bordered_section_heading">
+  <br>
+  <h2>YOUR CURRENT BLOG COMMENTS (if any)</h2>
+  <br>
+</div>
+<div class="bordered_section_body">
+  {{#each blogComments as |blogComment|}}
+    <div class="">
+      <h3 class=""><a href="/blog/detail/{{blogComment.blog_id}}">About Blog Message ID: {{blogComment.blog_id}}</a></h3>
+      <p class="">Blog Comment Text:</p>
+      <div class="comment_text_area_gallery_div">
+        <p>{{blogComment.commentText}}</p>
+      </div>
+      <p class="">Comment ID: {{blogComment.id}}</p>
+      <br>
+      <button type="button" class="" onclick="window.scrollTo(0, 0);">
+        &nbsp;Go to the Top of this Title List Screen&nbsp;
+      </button><br>
+      <br>
+      <button type="button" class="" onclick="window.location.replace('/');">
+        &nbsp;Go to the Home Page Screen -- Main Blog Function List&nbsp;
+      </button><br>
+      <br>
+      <button type="button" class="" onclick="window.location.replace('/blog');">
+        &nbsp;Go to the Blog Gallery Screen -- Main Blog Message List&nbsp;
+      </button><br>
+      <br>
+      {{!-- <button type="button" class="" onclick="history.back()">
+        &nbsp;Go to the Previous Screen&nbsp;
+      </button><br>
+      <br> --}}
+    </div>
+  {{/each}}
+  <br>
+</div>
+

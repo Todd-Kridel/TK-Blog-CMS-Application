@@ -1,0 +1,367 @@
+
+
+<div class="bordered_section_heading">
+  <br>
+  <h2>SELECTED BLOG MESSAGE DETAILS -- Full Text and Associated Comments (if any)</h2>
+  <br>
+</div>
+<div class="bordered_section_body">
+  {{#if session.loggedIn}}
+  <br>
+  <div class="bordered_section_body">
+    <button onclick="(document.getElementById('updateMessageDiv')).scrollIntoView({behavior: 'smooth'}, true)">
+      Update this Message
+    </button>&nbsp;&nbsp;&nbsp;&nbsp;
+    <button onclick="(document.getElementById('addCommentDiv')).scrollIntoView({behavior: 'smooth'}, true)">
+      Add a Comment
+    </button>&nbsp;&nbsp;&nbsp;&nbsp;
+    <button onclick="(document.getElementById('updateCommentDiv')).scrollIntoView({behavior: 'smooth'}, true)">
+      Update a Comment
+    </button>
+  </div>
+  <br>
+  {{/if}}
+  <div>
+    <br>
+    <p>Title: {{blog.title}}</p>
+    <p>Author ID: {{blog.author_id}}</p>
+    <p>Post Date: {{blog.post_date}}</p>
+    <p>Blog ID: {{blog.id}}</p>
+    <br>
+    <p>Message:</p>
+    <div class="message_text_area_detail_div">
+      <p>{{blog.message_text}}</p>
+    </div>
+    <br>
+    <button type="button" class="" onclick="window.scrollTo(0, 0);">
+      &nbsp;Back to the Top of this List Page&nbsp;
+    </button><br>
+    <br>
+    <button type="button" class="" onclick="history.back()">
+      &nbsp;Back to the Previous Screen&nbsp;
+    </button><br>
+    <br>
+    <button type="button" class="" onclick="window.location.replace('/blog');">
+      &nbsp;Back to the Main Blog Message List&nbsp;
+    </button><br>
+    <br>
+    <hr>
+    <br>
+    <br>
+    <div id="updateMessageDiv" class="bordered_section_body">
+      {{#if session.loggedIn}}
+        {{!-- href="/blog/user/{{session.loggedOnUserID}}"> --}}
+        <br>
+        <div id="updateMessageTextFieldDiv">
+          <p>Title:</p>
+          <p><input id="updateMessageTitleField" class="messageTitleField" type="text"></input></p>
+          <br>
+          <p>Message Text:</p>
+          <textarea id="updateMessageTextField" class="messageTextField"></textarea>
+          <br>&nbsp;
+        </div>
+        <button id="updateMessageTextButton" type="button" class="" onclick="updateMessageTextButtonProcessing();">
+          &nbsp;Update this Blog Message&nbsp;
+        </button>
+        <button id="saveUpdateMessageButton" type="button" onclick="saveUpdateMessageButtonProcessing();">
+          &nbsp;Save&nbsp;
+        </button>&nbsp;&nbsp;
+        <button id="cancelUpdateMessageButton" type="button" onclick="cancelUpdateMessageButtonProcessing();">
+          &nbsp;Cancel&nbsp;
+        </button><br>
+        <br>
+      {{else}} 
+        <p><a href="/logon">Log-on</a> for an extra "Update a Message" function.</p>
+      {{/if}}
+    </div>
+    <br>
+    <br>
+    <div class="bordered_section_body">
+      {{#if session.loggedIn}}
+        <p>Access the main <a href="/blog">Blog Gallery</a> for an extra "Add a Message" function (to create a new blog).</p>
+      {{else}} 
+        <p><a href="/logon">Log-on</a> and access the main <a href="/blog">Blog Gallery</a> for an extra "Add a Message" function (to create a new blog).</p>
+      {{/if}}
+    </div>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <br>
+    <div class="bordered_section_heading">
+      <br>
+      <h3>BLOG COMMENTS (if any)</h3>
+    </div>
+    <div class="bordered_section_body">
+        <br>
+        <p class="">Comment Date: </p>
+        <p class="">Comment Author ID: </p>
+        <p class="">About Blog ID: </p>
+        <br>
+        <p class="">Blog Comment Text:</p>
+        <div class="comment_text_area_detail_div">
+          <p></p>
+        </div>
+        <br>
+        <button type="button" class="" onclick="window.scrollTo(0, 0)">
+          &nbsp;Back to the Top of this Comment List&nbsp;
+        </button><br>
+        <br>
+        <button type="button" class="" onclick="history.back()">
+          &nbsp;Back to the Previous Screen&nbsp;
+        </button><br>
+        <br>
+        <button type="button" class="" onclick="window.location.replace('/blog');">
+          &nbsp;Back to the Main Blog Message List&nbsp;
+        </button><br>
+        <br>
+      <div class="bordered_section_body">
+        <br>
+        <p>There currently are not any comments that are about the selected blog message.</p>
+        <br>
+      <hr>
+      <br>
+      <br>
+      <div id="addCommentDiv" class="bordered_section_body">
+        {{#if session.loggedIn}}
+          {{!-- href="/blog/user/{{session.loggedOnUserID}}"> --}}
+          <br>
+          <div id="addCommentTextFieldDiv">
+            <p>Comment Text:</p>
+            <textarea id="addCommentTextField" class="commentTextField"></textarea>
+            <br>&nbsp;
+          </div>
+          <button id="addCommentTextButton" type="button" class="" onclick="addCommentTextButtonProcessing();">
+            &nbsp;Add a New Comment to this Blog Message&nbsp;
+          </button>
+          <button id="saveAddCommentButton" type="button" onclick="saveAddCommentButtonProcessing();">
+            &nbsp;Save&nbsp;
+          </button>&nbsp;&nbsp;
+          <button id="cancelAddCommentButton" type="button" onclick="cancelAddCommentButtonProcessing();">
+            &nbsp;Cancel&nbsp;
+          </button><br>
+          <br>
+        {{else}} 
+          <p><a href="/logon">Log-on</a> for an extra "Add a Comment" function.</p>
+        {{/if}}
+      </div>
+      <br>
+      <br>
+      <div id="updateCommentDiv" class="bordered_section_body">
+        {{#if session.loggedIn}}
+          {{!-- href="/blog/user/{{session.loggedOnUserID}}"> --}}
+          <br>
+          <div id="updateCommentTextFieldDiv">
+            <p>Comment Text:</p>
+            <textarea id="updateCommentTextField" class="commentTextField"></textarea>
+            <br>&nbsp;
+          </div>
+          <button id="updateCommentTextButton" type="button" class="" onclick="updateCommentTextButtonProcessing();">
+            &nbsp;Update this Comment of this Blog Message&nbsp;
+          </button>
+          <button id="saveUpdateCommentButton" type="button" onclick="saveUpdateCommentButtonProcessing();">
+            &nbsp;Save&nbsp;
+          </button>&nbsp;&nbsp;
+          <button id="cancelUpdateCommentButton" type="button" onclick="cancelUpdateCommentButtonProcessing();">
+            &nbsp;Cancel&nbsp;
+          </button><br>
+          <br>
+        {{else}} 
+          <p><a href="/logon">Log-on</a> for an extra "Update a Comment" function.</p>
+        {{/if}}
+      </div>
+      <br>
+      <br>
+    </div>
+  </div>
+</div>
+
+
+{{#if session.loggedIn}}
+<script>
+
+
+////////
+
+
+let updateMessageTextField = document.getElementById("updateMessageTextField");
+let updateMessageTextButton = document.getElementById("updateMessageTextButton");
+let updateMessageTextFieldDiv = document.getElementById("updateMessageTextFieldDiv");
+let saveUpdateMessageButton = document.getElementById("saveUpdateMessageButton");
+let cancelUpdateMessageButton = document.getElementById("cancelUpdateMessageButton");
+updateMessageTextFieldDiv.style.display = "none";
+saveUpdateMessageButton.style.display = "none";
+cancelUpdateMessageButton.style.display = "none";
+updateMessageTextField.style.height = "150px";
+updateMessageTextField.style.setProperty("border", "1px solid black");
+//
+/*
+document.addEventListener("click", function(event) {
+  //alert(event.target.id);
+  if (event.target.id.indexOf("Message") != -1) {    
+    alert("Message event!");
+  }
+  else {
+    alert("non-Message event!");
+  }
+});
+*/
+
+let addCommentTextField = document.getElementById("addCommentTextField");
+let addCommentTextButton = document.getElementById("addCommentTextButton");
+let addCommentTextFieldDiv = document.getElementById("addCommentTextFieldDiv");
+let saveAddCommentButton = document.getElementById("saveAddCommentButton");
+let cancelAddCommentButton = document.getElementById("cancelAddCommentButton");
+addCommentTextFieldDiv.style.display = "none";
+saveAddCommentButton.style.display = "none";
+cancelAddCommentButton.style.display = "none";
+addCommentTextField.style.height = "150px";
+addCommentTextField.style.setProperty("border", "1px solid black");
+
+let updateCommentTextField = document.getElementById("updateCommentTextField");
+let updateCommentTextButton = document.getElementById("updateCommentTextButton");
+let updateCommentTextFieldDiv = document.getElementById("updateCommentTextFieldDiv");
+let saveUpdateCommentButton = document.getElementById("saveUpdateCommentButton");
+let cancelUpdateCommentButton = document.getElementById("cancelUpdateCommentButton");
+updateCommentTextFieldDiv.style.display = "none";
+saveUpdateCommentButton.style.display = "none";
+cancelUpdateCommentButton.style.display = "none";
+updateCommentTextField.style.height = "150px";
+updateCommentTextField.style.setProperty("border", "1px solid black");
+
+
+////////
+
+
+function updateMessageTextButtonProcessing() {
+//alert("updateMessageTextButtonProcessing()");
+updateMessageTextFieldDiv.style.display = "block";
+updateMessageTextField.style.setProperty("border", "1px solid yellow");
+updateMessageTextButton.style.display = "none";
+saveUpdateMessageButton.style.display = "inline";
+cancelUpdateMessageButton.style.display = "inline";
+}
+
+
+function saveUpdateMessageButtonProcessing() {
+if (updateMessageTextField.value != "") {
+  let newRecord = updateMessageTextField.value;
+  alert("The entered update message text has been saved to the blog database." + "\n" + "\n" + 
+    "Message: " + newRecord + "\n" + "\n" + 
+    "PERFORM A RECORD-UPDATE OPERATION IN THE DATABASE.");
+  updateMessageTextField.style.setProperty("border", "1px solid black");
+  updateMessageTextField.value = "";
+  updateMessageTextButton.style.display = "inline";
+  saveUpdateMessageButton.style.display = "none";
+  cancelUpdateMessageButton.style.display = "none";
+  updateMessageTextFieldDiv.style.display = "none";
+}
+else {
+  alert("New update message text has not yet been entered.");
+}
+}
+
+
+function cancelUpdateMessageButtonProcessing() {
+updateMessageTextField.style.setProperty("border", "1px solid black");
+updateMessageTextField.value = "";
+updateMessageTextButton.style.display = "inline";
+saveUpdateMessageButton.style.display = "none";
+cancelUpdateMessageButton.style.display = "none";
+updateMessageTextFieldDiv.style.display = "none";
+}
+
+
+////////
+
+
+function addCommentTextButtonProcessing() {
+//alert("addCommentTextButtonProcessing()");
+addCommentTextFieldDiv.style.display = "block";
+addCommentTextField.style.setProperty("border", "1px solid yellow");
+addCommentTextButton.style.display = "none";
+saveAddCommentButton.style.display = "inline";
+cancelAddCommentButton.style.display = "inline";
+}
+
+
+function saveAddCommentButtonProcessing() {
+if (addCommentTextField.value != "") {
+  let newRecord = addCommentTextField.value;
+  alert("The entered add comment text has been saved to the blog database." + "\n" + "\n" + 
+    "Message: " + newRecord + "\n" + "\n" + 
+    "PERFORM A RECORD-CREATE OPERATION IN THE DATABASE.");
+  addCommentTextField.style.setProperty("border", "1px solid black");
+  addCommentTextField.value = "";
+  addCommentTextButton.style.display = "inline";
+  saveAddCommentButton.style.display = "none";
+  cancelAddCommentButton.style.display = "none";
+  addCommentTextFieldDiv.style.display = "none";
+}
+else {
+  alert("New add comment text has not yet been entered.");
+}
+}
+
+
+function cancelAddCommentButtonProcessing() {
+addCommentTextField.style.setProperty("border", "1px solid black");
+addCommentTextField.value = "";
+addCommentTextButton.style.display = "inline";
+saveAddCommentButton.style.display = "none";
+cancelAddCommentButton.style.display = "none";
+addCommentTextFieldDiv.style.display = "none";
+}
+
+
+////////
+
+function updateCommentTextButtonProcessing() {
+//alert("updateCommentTextButtonProcessing()");
+updateCommentTextFieldDiv.style.display = "block";
+updateCommentTextField.style.setProperty("border", "1px solid yellow");
+updateCommentTextButton.style.display = "none";
+saveUpdateCommentButton.style.display = "inline";
+cancelUpdateCommentButton.style.display = "inline";
+}
+
+
+function saveUpdateCommentButtonProcessing() {
+if (updateCommentTextField.value != "") {
+  let newRecord = updateCommentTextField.value;
+  alert("The entered update comment text has been saved to the blog database." + "\n" + "\n" + 
+    "Message: " + newRecord + "\n" + "\n" + 
+    "PERFORM A RECORD-UPDATE OPERATION IN THE DATABASE.");
+  updateCommentTextField.style.setProperty("border", "1px solid black");
+  updateCommentTextField.value = "";
+  updateCommentTextButton.style.display = "inline";
+  saveUpdateCommentButton.style.display = "none";
+  cancelUpdateCommentButton.style.display = "none";
+  updateCommentTextFieldDiv.style.display = "none";
+}
+else {
+  alert("New update comment text has not yet been entered.");
+}
+}
+
+
+function cancelUpdateCommentButtonProcessing() {
+updateCommentTextField.style.setProperty("border", "1px solid black");
+updateCommentTextField.value = "";
+updateCommentTextButton.style.display = "inline";
+saveUpdateCommentButton.style.display = "none";
+cancelUpdateCommentButton.style.display = "none";
+updateCommentTextFieldDiv.style.display = "none";
+}
+
+
+////////
+
+
+</script>
+{{else}} 
+<script>
+//
+</script>
+{{/if}}
+

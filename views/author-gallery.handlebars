@@ -1,0 +1,72 @@
+
+ 
+<div class="bordered_section_heading">
+  <br>
+  <h2>AUTHOR GALLERY</h2>
+  <br>
+</div>
+<div class="bordered_section_body">
+  <br>
+  <p>
+    <button id="authorIdSearchButton" onclick="authorIdSearchButtonProcessing();">
+      &nbsp;Find a Desired Specific Author ID&nbsp; --->&nbsp;
+    </button>
+    &nbsp;&nbsp;Desired&nbsp;Author&nbsp;ID&nbsp;(number):&nbsp;
+    <input id="authorIdSearchField" type="text" size="3"></input>
+  </p>
+  <br>
+  <p>Or select an author from the gallery that is at below.</p>
+  <br>
+  <hr>
+  {{#each users as |user|}}
+    <br>
+    <p>Name: <a href="/blog/user/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></p>
+    <p>Author/User ID: {{user.id}}</p>
+    <br>
+    <hr>
+  {{/each}}
+  <br>
+  <button type="button" class="" onclick="window.scrollTo(0, 0);">
+    &nbsp;Go to the Top of this Author List Screen&nbsp;
+  </button><br>
+  <br>
+  <button type="button" class="" onclick="window.location.replace('/');">
+    &nbsp;Go to the Home Page Screen -- Main Blog Function List&nbsp;
+  </button><br>
+  <br>
+    <button type="button" class="" onclick="window.location.replace('/blog');">
+      &nbsp;Go to the Blog Gallery Screen -- Main Blog Message List&nbsp;
+    </button><br>
+  <br>
+  {{!-- <button type="button" class="" onclick="history.back()">
+    &nbsp;Go to the Previous Screen&nbsp;
+  </button><br>
+  <br> --}}
+</div>
+
+
+<script>
+
+
+function authorIdSearchButtonProcessing() {
+  let authorId = parseInt(document.getElementById("authorIdSearchField").value);
+  if ((!isNaN(authorId) && (authorId > 0) && (Number.isInteger(authorId)))) {
+    //alert("author ID: " + authorId);
+    window.location.replace("/blog/user/" + authorId);
+  }
+  else {
+    alert("ERROR: The specified author ID must be an integer number that is greater than 0.");
+  }
+}
+
+
+document.addEventListener("keydown", (event) => {
+  const keyName = event.key;
+  if (keyName === "Enter") {
+    authorIdSearchButtonProcessing();
+  }
+});
+
+
+</script>
+

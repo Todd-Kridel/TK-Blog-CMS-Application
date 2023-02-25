@@ -1,0 +1,653 @@
+
+
+<div class="bordered_section_heading">
+  <br>
+  <h2>SELECTED BLOG MESSAGE DETAILS -- FULL TEXT AND ASSOCIATED COMMENTS (if any)</h2>
+  <br>
+</div>
+<div class="bordered_section_body">
+<br>
+<button onclick="window.location.href ='#blogCommentsDiv'">
+  Go to the Comments (if any) of this Blog Message
+</button>
+<br>
+  <div>
+    <br>
+    <p><span class="bigAndBold">Title: {{blogDetail.blog.title}}</span></p>
+    <p>Author: {{blogDetail.blog.user.first_name}} {{blogDetail.blog.user.last_name}} (User ID: {{blogDetail.blog.author_id}})</p>
+    <p>Post Date: {{blogDetail.blog.post_date}}</p>
+    <p>Blog ID: {{blogDetail.blog.id}}</p>
+    <br>
+    <p>Message:</p>
+    <div class="message_text_area_detail_div">
+      <p>{{blogDetail.blog.message_text}}</p>
+    </div>
+    <br>
+    <button type="button" class="" onclick="window.scrollTo(0, 0);">
+      &nbsp;Go to the Top of this Blog Details Screen&nbsp;
+    </button><br>
+    <br>
+    <button type="button" class="" onclick="window.location.replace('/blog');">
+      &nbsp;Go to the Blog Gallery Screen -- Main Blog Message List&nbsp;
+    </button><br>
+    <br>
+    {{!-- <button type="button" class="" onclick="history.back()">
+      &nbsp;Go to the Previous Screen&nbsp;
+    </button><br>
+    <br> --}}
+    <br>
+    <div id="updateMessageDiv" class="bordered_section_body">
+      {{#if session.loggedIn}}
+        {{!-- href="/blog/user/{{session.loggedOnUserID}}"> --}}
+        <br>
+        <div id="updateMessageTextFieldDiv">
+          <p>Title:</p>
+          <p><input id="updateMessageTitleField" class="messageTitleField" type="text"></input></p>
+          <br>
+          <p>Message Text:</p>
+          <textarea id="updateMessageTextField" class="messageTextField"></textarea>
+          <br>&nbsp;
+        </div>
+        <button id="updateMessageTextButton" type="button" class="" onclick="updateMessageTextButtonProcessing({{blogDetail.blog.id}});">
+          &nbsp;Update this Blog Message&nbsp;
+        </button>
+        <button id="saveUpdateMessageButton" type="button" onclick="saveUpdateMessageButtonProcessing();">
+          &nbsp;Save&nbsp;
+        </button>&nbsp;&nbsp;
+        <button id="cancelUpdateMessageButton" type="button" onclick="cancelUpdateMessageButtonProcessing();">
+          &nbsp;Cancel&nbsp;
+        </button><br>
+        <br>
+      {{else}} 
+        <p><a href="/logon">Log-on</a> to get to an extra "Update a Message" function on this Details screen.</p>
+      {{/if}}
+    </div>
+    <br>
+    <br>
+    <div class="bordered_section_body">
+      {{#if session.loggedIn}}
+        <br>
+        <p>Access the main <a href="/blog">Blog Gallery</a> screen to get to an extra "Add a Message" function (to create a new blog).</p>
+        <br>
+      {{else}} 
+        <br>
+        <p><a href="/logon">Log-on</a> and access the main <a href="/blog">Blog Gallery</a> screen to get to an extra "Add a Message" function (to create a new blog).</p>
+        <br>
+      {{/if}}
+    </div>
+    <br>
+    <br>
+    <hr>
+  </div>
+</div>
+<br>
+<br>
+<div id="blogCommentsDiv" class="bordered_section_heading">
+  <br>
+  <h3>COMMENTS (if any) THAT ARE FOR THE SELECTED BLOG MESSAGE (ID: {{blogDetail.blog.id}})</h3>
+{{#if blogDetail.blogComments}}
+  <p>( Total: {{blogDetail.blogComments.length}} )</p>
+  <br>
+  </div>
+  <div class="bordered_section_body">
+    <br>
+    <p>
+      <a href="#addCommentDiv">
+        {{!-- >button onclick="(document.getElementById('addCommentDiv')).scrollIntoView({behavior: 'smooth'}, true);"></button> --}} 
+        Go to the 'Add a Comment' Button
+      </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="#updateCommentDiv">
+        {{!-- >button onclick="(document.getElementById('updateCommentDiv')).scrollIntoView({behavior: 'smooth'}, true);"></button> --}} 
+        Go to the 'Update a Comment' Button
+      </a>
+    </p>
+    <br>
+  </div>
+  <div class="bordered_section_body">
+{{#each blogDetail.blogComments as |comment|}}
+    <br>
+    <p class="">Author: {{comment.user.first_name}} {{comment.user.last_name}} (User ID: {{comment.author_id}})</p>
+    <p class="">Comment Date: {{comment.comment_date}}</p>
+    <p class="">Comment ID: {{comment.id}}</p>
+    <p class="">About Blog ID: {{comment.blog_id}}</p>
+    <br>
+    <p class="">Blog Comment Text:</p>
+    <div class="comment_text_area_detail_div">
+      <p>{{comment.comment_text}}</p>
+    </div>
+    <br>
+    <button type="button" class="" onclick="window.location.href = '#blogCommentsDiv'">
+      &nbsp;Go to the Top of this Comment List&nbsp;
+    </button><br>
+    <br>
+    <button type="button" class="" onclick="window.scrollTo(0, 0)">
+      &nbsp;Go to the Top of this Blog Details Screen&nbsp;
+    </button><br>
+    <p>(to get to the beginning of the selected blog information)<br>
+    (and to get to the Home Page screen -- main blog function list)<br>
+    (and to get to the Blog Dashboard screen -- personal posts list)</p>
+    <br>
+    <button type="button" class="" onclick="window.location.replace('/blog');">
+      &nbsp;Go to the Blog Gallery Screen -- Main Blog Message List&nbsp;
+    </button><br>
+    <br>
+    {{!-- <button type="button" class="" onclick="history.back()">
+      &nbsp;Go to the Previous Screen&nbsp;
+    </button><br>
+    <br> --}}
+    <p>
+      <a href="#addCommentDiv">
+        {{!-- >button onclick="(document.getElementById('addCommentDiv')).scrollIntoView({behavior: 'smooth'}, true);"></button> --}} 
+        Go to the 'Add a Comment' Button
+      </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="#updateCommentDiv">
+        {{!-- >button onclick="(document.getElementById('updateCommentDiv')).scrollIntoView({behavior: 'smooth'}, true);"></button> --}} 
+        Go&nbsp;to&nbsp;the&nbsp;'Update&nbsp;a&nbsp;Comment'&nbsp;Button&nbsp;for&nbsp;a&nbsp;Known&nbsp;Comment&nbsp;ID
+      </a>
+    </p>
+    <br>
+    <br>
+    <hr>
+    <br>
+  {{/each}}
+{{else}}
+  <br>
+  </div>
+  <div class="bordered_section_body">
+    <br>
+    <p>There currently are not any comments that are about the selected blog message.</p>
+    <br>
+{{/if}}
+  <br>
+  <div id="addCommentDiv" class="bordered_section_body">
+    {{#if session.loggedIn}}
+      {{!-- href="/blog/user/{{session.loggedOnUserID}}"> --}}
+      <br>
+      <div id="addCommentTextFieldDiv">
+        <p>Comment Text:</p>
+        <textarea id="addCommentTextField" class="commentTextField"></textarea>
+        <br>&nbsp;
+      </div>
+      <button id="addCommentTextButton" type="button" class="" onclick="addCommentTextButtonProcessing({{blogDetail.comment.id}});">
+        &nbsp;Add a New Comment to this Blog Message&nbsp;
+      </button>
+      <button id="saveAddCommentButton" type="button" onclick="saveAddCommentButtonProcessing();">
+        &nbsp;Save&nbsp;
+      </button>&nbsp;&nbsp;
+      <button id="cancelAddCommentButton" type="button" onclick="cancelAddCommentButtonProcessing();">
+        &nbsp;Cancel&nbsp;
+      </button><br>
+      <br>
+    {{else}} 
+      <p><a href="/logon">Log-on</a> to get to an extra "Add a Comment" function on this Details screen.</p>
+    {{/if}}
+  </div>
+  <br>
+  <br>
+  <div id="updateCommentDiv" class="bordered_section_body">
+    {{#if session.loggedIn}}
+      {{!-- href="/blog/user/{{session.loggedOnUserID}}"> --}}
+      <br>
+      <div id="updateCommentTextFieldDiv">
+        <p>Comment Text:</p>
+        <textarea id="updateCommentTextField" class="commentTextField"></textarea>
+        <br>&nbsp;
+      </div>
+      <button id="updateCommentTextButton" type="button" class="" onclick="updateCommentTextButtonProcessing({{blogDetail.comment.id}});">
+        &nbsp;Update a Specified Comment of this Blog Message (or of Another Known Blog) --->&nbsp;
+      </button>&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;Desired&nbsp;Comment&nbsp;ID&nbsp;(number):&nbsp;<input id="updateCommentIDField" class="" type="text" size="3"></input>
+      <button id="saveUpdateCommentButton" type="button" onclick="saveUpdateCommentButtonProcessing();">
+        &nbsp;Save&nbsp;
+      </button>&nbsp;&nbsp;
+      <button id="cancelUpdateCommentButton" type="button" onclick="cancelUpdateCommentButtonProcessing();">
+        &nbsp;Cancel&nbsp;
+      </button><br>
+      <br>
+    {{else}} 
+      <p><a href="/logon">Log-on</a> to get to an extra "Update a Comment" function on this Details screen.</p>
+    {{/if}}
+  </div>
+  <br>
+  <br>
+</div>
+
+
+{{#if session.loggedIn}}
+<script>  // FOR ONLY "LOGGED-ON" STATUS
+
+
+//////// BEGINNING: UPDATE BLOG MESSAGE
+
+
+let updateMessageTitleField = document.getElementById("updateMessageTitleField");
+let updateMessageTextField = document.getElementById("updateMessageTextField");
+let updateMessageTextButton = document.getElementById("updateMessageTextButton");
+let updateMessageTextFieldDiv = document.getElementById("updateMessageTextFieldDiv");
+let saveUpdateMessageButton = document.getElementById("saveUpdateMessageButton");
+let cancelUpdateMessageButton = document.getElementById("cancelUpdateMessageButton");
+// v
+// FUTURE ENHANCEMENT:
+// ADD EVENT LISTENERS FOR KEY DOWN OR FIELD UPDATE OF THE TITLE FIELD AND THE MESSAGE FIELD.
+// CHECK ABOUT IF THE RECORD FIELDS HAVE BEEN CHANGED FOR THE CURRENT UPDATE PROCESS.
+// ^
+updateMessageTextFieldDiv.style.display = "none";
+saveUpdateMessageButton.style.display = "none";
+cancelUpdateMessageButton.style.display = "none";
+updateMessageTextField.style.height = "150px";
+updateMessageTextField.style.setProperty("border", "1px solid black");
+
+
+async function updateMessageTextButtonProcessing(passedBlogID) {
+//alert("updateMessageTextButtonProcessing()");
+//alert("...Loading information of passedBlogID " + passedBlogID + "...");
+//
+// Determine about if the current user is the author of the selected blog record and if so then enable access to the 
+// update-message button process functions; otherwise do not allow the deeper-level access.
+//alert("blogDetail.blog.author_id session.loggedOnUserID: " + {{blogDetail.blog.author_id}} + " " + {{session.loggedOnUserID}});
+if ({{blogDetail.blog.author_id}} == {{session.loggedOnUserID}}) {
+  //
+  //alert("updateMessageTextButtonProcessing()");
+  updateMessageTextFieldDiv.style.display = "block";
+  updateMessageTextField.style.setProperty("border", "1px solid yellow");
+  updateMessageTextButton.style.display = "none";
+  saveUpdateMessageButton.style.display = "inline";
+  cancelUpdateMessageButton.style.display = "inline";
+  //
+  // Load the current information of the selected blog record.
+  //
+  try {
+    let fetchURL = ("/blog/update/message/" + passedBlogID);
+    //alert("fetchURL: " + fetchURL);
+    const response = await fetch(fetchURL); 
+      //console.log("RESPONSE STATUS (CLIENT): " + response.status);
+      if (await response.ok) {
+        //console.log("RESPONSE PROCESSING ON THE CLIENT");
+        // blog {"id":1,"title":"TITLE","message_text":"MESSAGE","author_id":1,"post_date":"2023-02-02"}
+        let loadCurrentBlogRecord = await response.json();
+        //console.log(loadCurrentBlogRecord);
+        //
+        updateMessageTitleField.value = loadCurrentBlogRecord.title;
+        updateMessageTextField.value = loadCurrentBlogRecord.message_text;
+      }
+      else {
+        alert("ERROR: The blog record could not be loaded. Try again or contact Tech Support. " + 
+          "Also check about if your logon status timed-out.");
+        cancelUpdateMessageButtonProcessing();  
+      }
+      //
+  }
+  catch (err) {
+    console.log(err);
+    cancelUpdateMessageButtonProcessing();
+  }
+}
+else {
+  alert("ALERT: This blog message cannot be updated by you because you are not the author of the message.");
+  cancelUpdateMessageButtonProcessing();
+}
+}
+
+
+async function saveUpdateMessageButtonProcessing() {
+//alert("saveUpdateMessageButtonProcessing() for blog record ID " + {{blogDetail.blog.id}});
+// v
+// FUTURE ENHANCEMENT:
+// CHECK ABOUT IF THE RECORD FIELDS HAVE BEEN CHANGED FOR THE CURRENT UPDATE PROCESS.
+// PER EVENT LISTENER FOR KEY DOWN OR FIELD UPDATE 
+// ^
+if (((updateMessageTitleField.value).trim() != "") && ((updateMessageTextField.value).trim() != "")) {
+  let title_entry = (updateMessageTitleField.value).trim();
+  let message_entry = (updateMessageTextField.value).trim();
+  //let author_ID_session = {{session.loggedOnUserID}};  // not changed for an update
+  let updateBlogID = {{blogDetail.blog.id}};
+  let fetchURL = ("/api/blog/" + {{blogDetail.blog.id}});
+  //alert("fetchURL: " + fetchURL + "\n" + JSON.stringify({title_entry, message_entry}));
+  try {
+    const response = await fetch(fetchURL, {
+      method: "PUT", 
+      body: JSON.stringify(
+        {
+        "title": title_entry, 
+        "message_text": message_entry
+        }
+      ), 
+      headers: {"Content-Type": "application/json"}
+      }); 
+      if (await response.ok) {
+        //console.log(response);
+        //console.log("RESPONSE STATUS (CLIENT): " + response.status);
+        //console.log("RESPONSE PROCESSING ON THE CLIENT");
+        // blog {"id":1,"title":"TITLE","message_text":"MESSAGE","author_id":1,"post_date":"2023-02-02"}
+        let updateBlogRecord = await response.json();
+        //console.log(updateBlogRecord);
+        // RESPONSE STATUS (CLIENT): 200
+        // RESPONSE PROCESSING ON THE CLIENT
+        // Promise {<pending>}
+        //   [[Prototype]]: Promise
+        //   [[PromiseState]]: "fulfilled"
+        //   [[PromiseResult]]: Object
+        //     author_id: <id>
+        //     id: <id>
+        //     message_text: "<MESSAGE>"
+        //     post_date: <date>
+        //     title: "<TITLE>"
+        //     [[Prototype]]: Object
+        //
+        updateMessageTextField.style.setProperty("border", "1px solid black");
+        updateMessageTitleField.value = "";
+        updateMessageTextField.value = "";
+        updateMessageTextButton.style.display = "inline";
+        saveUpdateMessageButton.style.display = "none";
+        cancelUpdateMessageButton.style.display = "none";
+        updateMessageTextFieldDiv.style.display = "none";
+        alert("Your selected blog message has successfully been updated (ID: " + {{blogDetail.blog.id}} + ").");
+        window.location.replace("/blog/detail/" + {{blogDetail.blog.id}});
+        //window.location.reload();
+      }
+      else {
+        alert("ERROR: The blog record could not be updated. Try again or contact Tech Support. " + 
+          "Also check about if your logon status timed-out.");
+        cancelUpdateMessageButtonProcessing();
+      }
+  }
+  catch (err) {
+    console.log(err);
+    cancelUpdateMessageButtonProcessing();
+  }
+}
+else {
+  alert("New update message text has not yet been entered. The blog message title and the blog message body text must be specified.");
+}
+}
+
+
+function cancelUpdateMessageButtonProcessing() {
+//alert("cancelUpdateMessageButtonProcessing()";
+updateMessageTextField.style.setProperty("border", "1px solid black");
+updateMessageTitleField.value = "";
+updateMessageTextField.value = "";
+updateMessageTextButton.style.display = "inline";
+saveUpdateMessageButton.style.display = "none";
+cancelUpdateMessageButton.style.display = "none";
+updateMessageTextFieldDiv.style.display = "none";
+}
+
+
+//////// END: UPDATE BLOG MESSAGE
+
+
+//////// BEGINNING: ADD BLOG COMMENT
+
+
+let addCommentTextField = document.getElementById("addCommentTextField");
+let addCommentTextButton = document.getElementById("addCommentTextButton");
+let addCommentTextFieldDiv = document.getElementById("addCommentTextFieldDiv");
+let saveAddCommentButton = document.getElementById("saveAddCommentButton");
+let cancelAddCommentButton = document.getElementById("cancelAddCommentButton");
+addCommentTextFieldDiv.style.display = "none";
+saveAddCommentButton.style.display = "none";
+cancelAddCommentButton.style.display = "none";
+addCommentTextField.style.height = "150px";
+addCommentTextField.style.setProperty("border", "1px solid black");
+
+
+function addCommentTextButtonProcessing() {
+//alert("addCommentTextButtonProcessing()");
+addCommentTextFieldDiv.style.display = "block";
+addCommentTextField.style.setProperty("border", "1px solid yellow");
+addCommentTextButton.style.display = "none";
+saveAddCommentButton.style.display = "inline";
+cancelAddCommentButton.style.display = "inline";
+}
+
+
+async function saveAddCommentButtonProcessing() {
+//alert("saveAddCommentButtonProcessing()");
+if ((addCommentTextField.value).trim() != "") {
+  let comment_entry = (addCommentTextField.value).trim();
+  let author_ID_session = {{session.loggedOnUserID}};
+  //
+  try {
+    const response = await fetch("/api/blog/comment/", {
+      method: "POST", 
+      body: JSON.stringify(
+        {
+        "comment_text": comment_entry, 
+        "author_id": author_ID_session, 
+        "blog_id": {{blogDetail.blog.id}}
+        }
+      ),
+      headers: {"Content-Type": "application/json"}
+      }); 
+      if (await response.ok) {
+        let newCommentRecord = await response.json();
+        //console.log(newCommentRecord);
+        addCommentTextField.style.setProperty("border", "1px solid black");
+        addCommentTextField.value = "";
+        addCommentTextButton.style.display = "inline";
+        saveAddCommentButton.style.display = "none";
+        cancelAddCommentButton.style.display = "none";
+        addCommentTextFieldDiv.style.display = "none";
+        alert("Your new blog comment has successfully been created -- ID: " + newCommentRecord.id + ". " + 
+          "The new comment will now be displayed in a detail/summary screen of the associated blog message.");
+        window.location.replace("/blog/detail/" + {{blogDetail.blog.id}});
+      }
+      else {
+        alert("ERROR: A new comment record could not be created. Try again or contact Tech Support. " + 
+          "Also check about if your logon status timed-out.");
+        cancelAddCommentButtonProcessing();
+      }
+  }
+  catch (err) {
+    console.log(err);
+    cancelAddCommentButtonProcessing();
+  }
+}
+else {
+  alert("New add comment text has not yet been entered. The blog comment body text must be specified.");
+}
+}
+
+
+function cancelAddCommentButtonProcessing() {
+//alert("cancelAddCommentButtonProcessing()");
+addCommentTextField.style.setProperty("border", "1px solid black");
+addCommentTextField.value = "";
+addCommentTextButton.style.display = "inline";
+saveAddCommentButton.style.display = "none";
+cancelAddCommentButton.style.display = "none";
+addCommentTextFieldDiv.style.display = "none";
+}
+
+
+//////// END: ADD BLOG COMMENT
+
+
+//////// BEGINNING: UPDATE BLOG COMMENT
+
+
+let updateCommentTextField = document.getElementById("updateCommentTextField");
+let updateCommentIDField = document.getElementById("updateCommentIDField");
+let updateCommentTextButton = document.getElementById("updateCommentTextButton");
+let updateCommentTextFieldDiv = document.getElementById("updateCommentTextFieldDiv");
+let saveUpdateCommentButton = document.getElementById("saveUpdateCommentButton");
+let cancelUpdateCommentButton = document.getElementById("cancelUpdateCommentButton");
+// v
+// FUTURE ENHANCEMENT:
+// ADD UPDATE-DATE FIELD
+// ^
+updateCommentTextFieldDiv.style.display = "none";
+saveUpdateCommentButton.style.display = "none";
+cancelUpdateCommentButton.style.display = "none";
+updateCommentTextField.style.height = "150px";
+updateCommentTextField.style.setProperty("border", "1px solid black");
+let updateCommentID;
+updateCommentIDField.addEventListener("keydown", (event) => {
+  const keyName = event.key;
+  if (keyName === "Enter") {
+    updateCommentTextButtonProcessing();
+  }
+});
+
+
+async function updateCommentTextButtonProcessing() {
+//alert("updateCommentTextButtonProcessing()");
+//alert("Requested update comment record ID: " + updateCommentIDField.value + "\n" +
+//  "Current involved blog record ID: " + {{blogDetail.blog.id}});
+updateCommentID = updateCommentIDField.value;
+// Load the current information of the selected comment record.
+// Determine about if the current user is the author of the selected comment record and if so then enable access to the 
+// update-comment button process functions; otherwise do not allow the deeper-level access.
+if ((updateCommentID != "") && (updateCommentID != NaN) && (Number.isInteger(Math.abs(parseInt(updateCommentID)))) && 
+  ((Math.abs(parseInt(updateCommentID))) > 0)) {
+  updateCommentID = Math.abs(parseInt(updateCommentID));
+  //
+  try {
+    let fetchURL = ("/blog/update/comment/" + updateCommentID);
+    //alert("updateCommentID: " + updateCommentID + "; fetchURL: " + fetchURL);
+    const response = await fetch(fetchURL); 
+      if (await response.ok) {
+        let loadCurrentCommentRecord = await response.json();
+        //alert("loadCurrentCommentRecord.author_id session.loggedOnUserID: " + loadCurrentCommentRecord.author_id + " " + 
+        //  {{session.loggedOnUserID}});
+        if (parseInt(loadCurrentCommentRecord.author_id) == parseInt({{session.loggedOnUserID}})) {
+          updateCommentTextFieldDiv.style.display = "block";
+          updateCommentTextField.style.setProperty("border", "1px solid yellow");
+          updateCommentIDField.setAttribute("readonly", "readonly");
+          updateCommentTextButton.style.display = "none";
+          saveUpdateCommentButton.style.display = "inline";
+          cancelUpdateCommentButton.style.display = "inline";
+          //
+          updateCommentTextField.value = loadCurrentCommentRecord.comment_text;
+        }
+        else {
+          alert("ALERT: The specified blog comment cannot be updated by you because you are not the author of the comment.");
+          cancelUpdateCommentButtonProcessing();
+        }
+      }
+      else {
+        alert("ERROR: The requested comment record could not be loaded. Re-check the ID number and try again. " + 
+          "Or contact Tech Support. Also check about if your logon status timed-out.");
+        cancelUpdateCommentButtonProcessing();
+      }
+  }
+  catch (err) {
+    console.log(err);
+    cancelUpdateCommentButtonProcessing();
+  }
+}
+else {
+  alert("ERROR: A comment ID must be specified. The specified ID must be an integer number that is greater than 0.");
+  cancelUpdateCommentButtonProcessing();
+}
+}
+
+
+async function saveUpdateCommentButtonProcessing() {
+//alert("saveUpdateCommentButtonProcessing(); updateCommentID: " + updateCommentID);
+// v
+// FUTURE ENHANCEMENT:
+// CHECK ABOUT IF THE RECORD FIELDS HAVE BEEN CHANGED FOR THE CURRENT UPDATE PROCESS.
+// PER EVENT LISTENER FOR KEY DOWN OR FIELD UPDATE 
+// ^
+if ((updateCommentTextField.value).trim() != "") {
+  let comment_entry = (updateCommentTextField.value).trim();
+  //let author_ID_session = {{session.loggedOnUserID}};  // not changed for an update
+  let updateBlogID = {{blogDetail.blog.id}};
+  //updateCommentID = document.getElementById("updateCommentIDField.value");
+  let fetchURL = ("/api/blog/comment/" + updateCommentID);
+  //console.log("to-server fetchURL: " + fetchURL);  
+  try {
+    const response = await fetch(fetchURL, {
+      method: "PUT", 
+      body: JSON.stringify(
+        {
+        "comment_text": comment_entry
+        //"author_id": already set; not changed 
+        //"blog_id": already set; not changed
+        }
+      ), 
+      headers: {"Content-Type": "application/json"}
+      }); 
+      if (await response.ok) {
+        let updateCommentRecord = await response.json();
+        updateCommentID = updateCommentIDField.value;
+        updateCommentTextField.style.setProperty("border", "1px solid black");
+        updateCommentTextField.value = "";
+        updateCommentIDField.value = "";
+        updateCommentIDField.removeAttribute("readonly");
+        updateCommentTextButton.style.display = "inline";
+        saveUpdateCommentButton.style.display = "none";
+        cancelUpdateCommentButton.style.display = "none";
+        updateCommentTextFieldDiv.style.display = "none";
+        alert("Your selected blog comment has successfully been updated (ID: " + updateCommentID + ").");
+        window.location.replace("/blog/detail/" + {{blogDetail.blog.id}});
+        //window.location.reload();
+      }
+      else {
+        alert("ERROR: The comment record could not be updated. Try again or contact Tech Support. " + 
+          "Also check about if your logon status timed-out.");
+        cancelUpdateCommentButtonProcessing();
+      }
+  }
+  catch (err) {
+    console.log(err);
+    cancelUpdateCommentButtonProcessing();
+  }
+}
+else {
+  alert("New update message text has not yet been entered. The blog message title and the blog message body text must be specified.");
+  cancelUpdateCommentButtonProcessing();
+}
+}
+
+
+function cancelUpdateCommentButtonProcessing() {
+//alert("cancelUpdateCommentButtonProcessing()");
+updateCommentTextField.style.setProperty("border", "1px solid black");
+updateCommentTextField.value = "";
+updateCommentIDField.value = "";
+updateCommentIDField.removeAttribute("readonly");
+updateCommentTextButton.style.display = "inline";
+saveUpdateCommentButton.style.display = "none";
+cancelUpdateCommentButton.style.display = "none";
+updateCommentTextFieldDiv.style.display = "none";
+};
+
+
+//////// END: UPDATE BLOG COMMENT
+
+
+</script>
+
+
+{{else}}
+<script>  // FOR ONLY "NOT-LOGGED-ON" STATUS
+
+
+</script>
+{{/if}}
+
+
+<script>  // FOR EITHER "LOGGED-ON" STATUS OR "NOT-LOGGED-ON" STATUS
+
+
+/*
+//document.addEventListener("click", function(event) {
+//  //alert(event.target.id);
+//  if (event.target.id.indexOf("Message") != -1) {    
+//    alert("Message event!");
+//  }
+//  else {
+//    alert("non-Message event!");
+//  }
+//});
+*/
+
+
+//alert("TEST MAIN SCRIPT/PAGE START");
+
+
+</script>
+

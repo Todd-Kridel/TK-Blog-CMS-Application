@@ -1,0 +1,174 @@
+
+
+<div class="bordered_section_heading">
+  <br>
+  <h2>BLOG GALLERY -- PERSONAL DASHBOARD -- A&nbsp;SUMMARY&nbsp;OF YOUR&nbsp;PERSONAL&nbsp;POSTS (BLOG&nbsp;MESSAGES&nbsp;AND&nbsp;COMMENTS)</h2>
+  {{#if blogDetail.blogs}}
+    <p>(Message Total: {{blogDetail.blogs.length}})</p>
+  {{/if}}
+  <br>
+</div>
+<div class="bordered_section_body">
+  <br>
+  <p>
+    <button onclick="window.location.href ='#blogCommentsDiv'">
+    Go to Your Blog Comments (if any)
+    </button>
+    &nbsp;&nbsp;...Or...&nbsp;&nbsp;Scroll&nbsp;Down&nbsp;to&nbsp;Your&nbsp;Blog&nbsp;Messages&nbsp;(if&nbsp;any)
+  </p>
+  <br>
+  <div class="bordered_section_body">
+    {{#if session.loggedIn}}
+    <br>
+    <p>Access the main <a href="/blog">Blog Gallery</a> screen to get to an extra "Add a Message" function (to create a new blog).</p>
+    <br>
+    {{else}}
+    <br>
+    <p><a href="/logon">Log-on</a> and access the main <a href="/blog">Blog Gallery</a> screen to get to an extra "Add a Message" function (to create a new blog).</p>
+    <br>
+    {{/if}}
+  </div>
+  <br>
+  <br>
+  <div class="bordered_section_body">
+    {{#if session.loggedIn}}
+    <br>
+    <p>Access the Detail screens of your existing blogs (if any) by way of the ID links at below to get to an extra "Update a Message" function.</p>
+    <br>
+    {{else}}
+    <br>
+    <p><a href="/logon">Log-on</a> and access the Detail screens of your existing blogs (if any) listed at below to get to an extra "Update a Message" function.</p>
+    <br>
+    {{/if}}
+  </div>
+  <br>
+  <br>
+  <hr>
+  {{#each blogDetail.blogs as |blog|}}
+  <br>
+  <br>
+  <p><span class="bigAndBold">Title: <a href="/blog/detail/{{blog.id}}">{{blog.title}}</a></span><br>  {{!-- onclick="alert('/blog/detail/{{blog.id}}')"  --}}
+    <br>
+    <span 
+      title="Note: Click the Title link to view more detail about this blog record: full expanded Message text and associated Comment text (if any)." 
+      style="text-decoration: underline;">
+      ( Click the title for more information. )
+    </span>
+  </p>
+  <br>
+  <p>Author ID: {{blog.author_id}}</p>
+  <p>Post Date: {{blog.post_date}}</p>
+  <p>Blog ID: {{blog.id}}</p>
+  <br>
+  <p>Message Text:&nbsp;&nbsp;&nbsp;&nbsp;[ Access the Blog Detail screen by way of the "Title" link at above to view or/and update existing blog main message text; Add new messages on the <a href="/blog">Blog Gallery</a> screen. ]</p>
+  <br>
+  <p>Comment Text (if any):&nbsp;&nbsp;&nbsp;&nbsp;[ Access the Blog Detail screen to view or/and update or/and add comments for blog records; or Access the <a href="#blogCommentsDiv">"Comments"</a> section of this screen for a summary of your comments. ]</p>
+  <br>
+  <br>
+  <button type="button" class="" onclick="window.scrollTo(0, 0);">
+    &nbsp;Go to the Top of this Blog Dashboard Screen -- Personal Posts List&nbsp;
+  </button><br>
+  <p>(to get to the beginning of the selected blog information)<br>
+  (and to get to the Home Page screen -- main blog function list)</p>
+  <br>
+  <button type="button" class="" onclick="window.location.replace('/blog');">
+    &nbsp;Go to the Blog Gallery Screen -- Main Blog Message List&nbsp;
+  </button><br>
+  <br>
+  {{!-- <button type="button" class="" onclick="history.back()">
+    &nbsp;Go to the Previous Screen&nbsp;
+  </button><br>
+  <br> --}}
+  <br>
+  <hr>
+  {{/each}}
+  {{#if blogDetail.blogs}}
+  {{else}}
+    <br>
+    <br>
+    <div class="bordered_section_body">
+      <br>
+      <p>There currently are not any blog records that are associated with your user ID.</p>
+      <br>
+    </div>
+    <br>
+    <br>
+  {{/if}}
+</div>
+<br>
+<div>
+  <br>
+  <div id="blogCommentsDiv" class="bordered_section_heading">
+    <br>
+    <h3>BLOG COMMENTS (if any)  -- PERSONAL DASHBOARD</h3>
+  {{#if blogDetail.blogComments}}
+    <p>(Comment Total: {{blogDetail.blogComments.length}})</p>
+    <br>
+  </div>
+  <div class="bordered_section_body">
+  {{#each blogDetail.blogComments as |Comment|}}
+      <br>
+      <br>
+      <p class="">Comment Author ID: {{Comment.author_id}}</p>
+      <p class="">Comment Date: {{Comment.comment_date}}</p>
+      <p class="">Comment ID: {{Comment.id}}</p>
+      <p class="">About Blog ID: <a href="/blog/detail/{{Comment.blog_id}}">{{Comment.blog_id}}</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span 
+        title="Note: Click the Blog ID link to view more detail about this blog record: full expanded Message text and associated Comment text (if any)." 
+        style="text-decoration: underline;">
+        ( <--- Click the related blog ID for more information. )
+        </span>
+      </p>
+      <br>
+      <p class="">Blog Comment Text:&nbsp;&nbsp;&nbsp;&nbsp;[ Access the "Blog Detail" screen by way of the ID link at above to view or/and update or/and add comments of blog records. ]</p>
+      <br>
+      <button type="button" class="" onclick="window.location.href = '#blogCommentsDiv'">
+        &nbsp;Go to the Top of this Comment List&nbsp;
+      </button><br>
+      <br>
+      <button type="button" class="" onclick="window.scrollTo(0, 0)">
+        &nbsp;Go to the Top of this Blog Dashboard Screen -- Personal Posts List&nbsp;
+      </button><br>
+      <br>
+      <button type="button" class="" onclick="window.location.replace('/blog');">
+        &nbsp;Go to the Blog Gallery Screen -- Main Blog Message List&nbsp;
+      </button><br>
+      <br>
+      <button type="button" class="" onclick="window.location.replace('/');">
+        &nbsp;Go to the Home Page Screen -- Main Blog Function List&nbsp;
+      </button><br>
+      <br>
+      {{!-- <button type="button" class="" onclick="history.back()">
+        &nbsp;Go to the Previous Screen&nbsp;
+      </button><br>
+      <br> --}}
+      <br>
+      <hr>
+    {{/each}}
+    </div>
+  {{else}}
+    <br>
+    </div>
+    <div class="bordered_section_body">
+      <br>
+      <p>There currently are not any comments that are associated with your user ID.</p>
+      <br>
+      <hr>
+    </div>
+    <br>
+  {{/if}}
+  <br>
+</div>
+
+
+{{#if session.loggedIn}}
+<script>
+
+</script>
+{{else}} 
+<script>
+//
+</script>
+{{/if}}
+

@@ -1,0 +1,284 @@
+
+
+<div class="bordered_section_heading">
+  <br>
+  <h2>BLOG GALLERY</h2>
+  {{#if blogs}}
+    <p>(Blog Message Total: {{blogs.length}})</p>
+  {{/if}}
+  <br>
+</div>
+<div class="bordered_section_body">
+  <br>
+  <br>
+  <div id="addBlogMessageFunctionSection" class="bordered_section_body">
+    {{#if session.loggedIn}}
+      {{!-- href="/blog/user/{{session.loggedOnUserID}}"> --}}
+      <br>
+      <div id="addMessageTextFieldDiv">
+        <p>Title:</p>
+        <p><input id="addMessageTitleField" class="messageTitleField" type="text"></input></p>
+        <br>
+        <p>Message Text:</p>
+        <textarea id="addMessageTextField" class="messageTextField"></textarea>
+        <br>&nbsp;
+      </div>
+      <button id="addMessageTextButton" type="button" class="" onclick="addMessageTextButtonProcessing();">
+        &nbsp;Add a New Blog Message&nbsp;
+      </button>
+      <button id="saveAddMessageButton" type="button" onclick="saveAddMessageButtonProcessing();">
+        &nbsp;Save&nbsp;
+      </button>&nbsp;&nbsp;
+      <button id="cancelAddMessageButton" type="button" onclick="cancelAddMessageButtonProcessing();">
+        &nbsp;Cancel&nbsp;
+      </button><br>
+      <br>
+    {{else}} 
+      <p><a href="/logon">Log-on</a> to get to an extra "Add a Message" function.</p>
+    {{/if}}
+  </div>
+  <br>
+  <br>
+  <hr>
+  {{#each blogs as |blog|}}
+  <br>
+  <br>
+  <p id="{{@index}}_blog_index"><span class="bigAndBold">Title: <a href="/blog/detail/{{blog.id}}">{{blog.title}}</a></span>
+    {{!-- onclick="alert('/blog/detail/{{blog.id}}')"  --}}
+    <br>
+    <span 
+      title="Note: Click the Title link to view more detail about this blog record: full expanded Message text and associated Comment text (if any)." 
+      style="text-decoration: underline;">
+      <br>
+      (&nbsp;Click&nbsp;the&nbsp;title&nbsp;link&nbsp;at&nbsp;above&nbsp;for&nbsp;more&nbsp;information.&nbsp;)
+    </span><br>
+    <br>
+    <button id="{{@index}}_blog_index_previous_button" class="goToPreviousBlogButton" onclick="goToPreviousBlogRecord(event)">
+      &nbsp;Go to the Previous Blog Record&nbsp;
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;  
+    {{!-- href="#next_blog_record" --}}
+    {{!-- a script (like href="javascript:alert('Hello');") --}}
+    <button id="{{@index}}_blog_index_next_button" class="goToNextBlogButton" onclick="goToNextBlogRecord(event)">
+      &nbsp;Go to the Next Blog Record&nbsp;
+    </button> 
+  </p>
+  <br>
+  <p id="">Blog ID: {{blog.id}}</p>
+  <p>Author ID: {{blog.author_id}}</p>
+  <p>Post Date: {{blog.post_date}}</p>
+  <br>
+  <p>Message (a partial preview):&nbsp;&nbsp;&nbsp;&nbsp;
+    <span 
+      title="Note: Click the Title link to view more detail about this blog record: full expanded Message text and associated Comment text (if any)." 
+      style="text-decoration: underline;">
+      (&nbsp;Click&nbsp;the&nbsp;title&nbsp;link&nbsp;at&nbsp;above&nbsp;for&nbsp;more information.&nbsp;)
+    </span>
+  </p>
+  <div class="message_text_area_gallery_div">
+    <p>{{blog.message_text}}</p>
+  </div>
+  <br>
+  <br>
+  <button type="button" class="" onclick="window.scrollTo(0, 0);">
+    &nbsp;Go to the Top of this Blog Gallery List Screen&nbsp;
+  </button><br>
+  <p>(to get to the "Add a Message" function and the Dashboard (Personal Posts) screen display function)</p>
+  <br>
+    <button type="button" class="" onclick="window.location.replace('/blog');">
+      &nbsp;Go to the Blog Gallery Screen -- Main Blog Message List&nbsp;
+    </button><br>
+  <br>
+  <button type="button" class="" onclick="window.location.replace('/');">
+    &nbsp;Go to the Home Page Screen -- Main Blog Function List&nbsp;
+  </button><br>
+  <br>
+  {{!-- <button type="button" class="" onclick="history.back()">
+    &nbsp;Go to the Previous Screen&nbsp;
+  </button><br>
+  <br> --}}
+  <br>
+  <hr>
+  {{/each}}
+</div>
+
+
+{{#if session.loggedIn}}
+<script>  // FOR ONLY "LOGGED-ON" STATUS
+
+
+//////// BEGINNING: ADD MESSAGE
+
+
+let addMessageTitleField = document.getElementById("addMessageTitleField");
+let addMessageTextField = document.getElementById("addMessageTextField");
+let addMessageTextButton = document.getElementById("addMessageTextButton");
+let addMessageTextFieldDiv = document.getElementById("addMessageTextFieldDiv");
+let saveAddMessageButton = document.getElementById("saveAddMessageButton");
+let cancelAddMessageButton = document.getElementById("cancelAddMessageButton");
+addMessageTextFieldDiv.style.display = "none";
+saveAddMessageButton.style.display = "none";
+cancelAddMessageButton.style.display = "none";
+addMessageTextField.style.height = "150px";
+addMessageTextField.style.setProperty("border", "1px solid black");
+
+
+function addMessageTextButtonProcessing() {
+//alert("addMessageTextButtonProcessing()");
+addMessageTextFieldDiv.style.display = "block";
+addMessageTextField.style.setProperty("border", "1px solid yellow");
+addMessageTextButton.style.display = "none";
+saveAddMessageButton.style.display = "inline";
+cancelAddMessageButton.style.display = "inline";
+}
+
+
+async function saveAddMessageButtonProcessing() {
+//alert("saveAddMessageButtonProcessing()");
+if (((addMessageTitleField.value).trim() != "") && ((addMessageTextField.value).trim() != "")) {
+  let title_entry = (addMessageTitleField.value).trim();
+  let message_entry = (addMessageTextField.value).trim();
+  let author_ID_session = {{session.loggedOnUserID}};
+  //
+  try {
+    const response = await fetch("/api/blog/", {
+      method: "POST", 
+      body: JSON.stringify(
+        {
+        "title": title_entry, 
+        "message_text": message_entry, 
+        "author_id": author_ID_session
+        }
+      ),
+      headers: {"Content-Type": "application/json"}
+      }); 
+      //console.log("RESPONSE STATUS (CLIENT): " + response.status);
+      if (await response.ok) {
+        //console.log("RESPONSE PROCESSING ON THE CLIENT");
+        // blog {"id":1,"title":"TITLE","message_text":"MESSAGE","author_id":1,"post_date":"2023-02-02"}
+        let newBlogRecord = await response.json();
+        //console.log(newBlogRecord);
+        // RESPONSE STATUS (CLIENT): 200
+        // RESPONSE PROCESSING ON THE CLIENT
+        // Promise {<pending>}
+        //   [[Prototype]]: Promise
+        //   [[PromiseState]]: "fulfilled"
+        //   [[PromiseResult]]: Object
+        //     author_id: <id>
+        //     id: <id>
+        //     message_text: "<MESSAGE>"
+        //     post_date: <date>
+        //     title: "<TITLE>"
+        //     [[Prototype]]: Object
+        //
+        addMessageTextField.style.setProperty("border", "1px solid black");
+        addMessageTitleField.value = "";
+        addMessageTextField.value = "";
+        addMessageTextButton.style.display = "inline";
+        saveAddMessageButton.style.display = "none";
+        cancelAddMessageButton.style.display = "none";
+        addMessageTextFieldDiv.style.display = "none";
+        alert("Your new blog message has successfully been created -- ID: " + newBlogRecord.id + ". " + 
+          "The new message will now be displayed in a detail/summary screen of the blog.");
+        window.location.replace("/blog/detail/" + newBlogRecord.id);
+        //
+        // OTHER POSSIBLE ACCESS APPROACH:
+        // fetch(`http://localhost:3000/<server route>/${<possible dynamic variable>}`, {
+        //   method: 'get'
+        //   })
+        //   .then(res => {
+        //     return res.json()
+        //     })
+        //     .then((response) => {
+        //       console.log('res: ' + JSON.stringify(response))
+        //       })
+        //
+      }
+      else {
+        alert("ERROR: A new blog record could not be created. Try again or contact Tech Support. " + 
+          "Also check about if your logon status timed-out.");
+        cancelAddMessageButtonProcessing();
+      }
+  }
+  catch (err) {
+    console.log(err);
+    cancelAddMessageButtonProcessing();
+  }
+}
+else {
+  alert("New add message text has not yet been entered. The blog message title and the blog message body text must be specified.");
+}
+}
+
+
+function cancelAddMessageButtonProcessing() {
+//alert("cancelAddMessageButtonProcessing()");
+addMessageTextField.style.setProperty("border", "1px solid black");
+addMessageTitleField.value = "";
+addMessageTextField.value = "";
+addMessageTextButton.style.display = "inline";
+saveAddMessageButton.style.display = "none";
+cancelAddMessageButton.style.display = "none";
+addMessageTextFieldDiv.style.display = "none";
+}
+
+
+//////// END: ADD MESSAGE
+
+
+</script>
+{{else}}
+<script>  // FOR ONLY "NOT-LOGGED-ON" STATUS
+
+
+</script>
+{{/if}}
+
+
+<script>  // FOR EITHER "LOGGED-ON" STATUS OR "NOT-LOGGED-ON" STATUS
+
+
+// Handlebars.registerHelper("determine_next_blog_index", function () {
+//   return index + 1;
+// });
+// id="{{@index}}_blog_index"
+// id="{{@index}}_blog_index_button"
+
+
+/*
+//document.addEventListener("click", function(event) {
+//  //alert(event.target.id);
+//  if (event.target.id.indexOf("Message") != -1) {    
+//    alert("Message event!");
+//  }
+//  else {
+//    alert("non-Message event!");
+//  }
+//});
+*/
+
+
+function goToPreviousBlogRecord(event) {
+//alert("goToPreviousBlogRecord() for button blog record " + (parseInt(event.target.id) + 1));
+// id="{{@index}}_blog_index_button";
+//currentBlogButton = document.getElementById("");
+let possiblePreviousBlogRecordID = (parseInt(event.target.id) - 1);
+  // Handlebars display/#each record index numbering is 1 less than the Handlebars database record index numbering
+let possiblePreviousButtonURLID = ("#" + possiblePreviousBlogRecordID + "_blog_index_previous_button");
+window.location.href = possiblePreviousButtonURLID;
+}
+
+
+function goToNextBlogRecord(event) {
+//alert("goToNextBlogRecord() for button blog record " + (parseInt(event.target.id) + 1));
+// id="{{@index}}_blog_index_button";
+//currentBlogButton = document.getElementById("");
+let possibleNextBlogRecordID = (parseInt(event.target.id) + 1);
+// Handlebars display/#each record index numbering is 1 less than the Handlebars database record index numbering
+let possibleNextButtonURLID = ("#" + possibleNextBlogRecordID + "_blog_index_next_button")
+window.location.href = possibleNextButtonURLID;
+}
+
+
+</script>
+
