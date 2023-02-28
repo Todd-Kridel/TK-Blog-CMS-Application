@@ -69,7 +69,7 @@ Also good coding practices and good GitHub/Git repository configuration.
 2. Add your database user name and password and the "blog_db" database name to an ".env" database user authentication file that is saved in the cloned repository directory: DB_NAME='blog_db'; DB_USER='user_ID'; DB_PASSWORD='user_password'; and replace the "user_ID" and "user_password" components with the appropriate user-specific information.
 3. Run the MySQL application with the "mysql" command from the clone directory console and enter the "source db/schema.sql" command to create the necessary application database; and then quit/exit the MySQL application to return to the console command line.
 4. Seed/Define the application database with the necessary tables and data by entering the command "node seeds/index".
-5. Run the application server by entering the command "npm start" or "node server". The system console should respond with the message ""!!!! The Blog CMS application server is now listening. !!!!"".
+5. Run the application server by entering the command "npm start" or "node server". The system console should respond with the message "!!!! The Blog CMS application server is now listening. !!!!".
 
 Note: For steps 4 and 5: Alternatively the "npm run seed" and "npm start" commands can be used to both seed the database and then start the server process.
 
