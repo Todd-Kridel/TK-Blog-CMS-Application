@@ -16,7 +16,8 @@ User.init(
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
-    autoIncrement: true,
+    autoIncrement: true, 
+    onDelete: "CASCADE"  // or onDelete="CASCADE" ?
   }, 
   first_name: {
     type: DataTypes.STRING,

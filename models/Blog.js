@@ -14,7 +14,7 @@ Blog.init(
     type: DataTypes.INTEGER, 
     allowNull: false, 
     primaryKey: true, 
-    autoIncrement: true, 
+    autoIncrement: true,
   }, 
   title: {
     type: DataTypes.STRING, 
@@ -30,6 +30,7 @@ Blog.init(
     references: {
       model: "user", 
       key: "id", 
+      onDelete: "CASCADE"  // or onDelete="CASCADE" ?
     },
   }, 
   post_date: {

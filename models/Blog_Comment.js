@@ -22,6 +22,7 @@ Blog_Comment.init(
     references: {
       model: "blog", 
       key: "id", 
+      onDelete: "CASCADE"  // or onDelete="CASCADE" ?
     }, 
   }, 
   comment_text: {
@@ -34,6 +35,7 @@ Blog_Comment.init(
     references: {
       model: "user", 
       key: "id", 
+      onDelete: "CASCADE"  // or onDelete="CASCADE" ?
     },
   }, 
   comment_date: {

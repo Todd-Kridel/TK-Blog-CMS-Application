@@ -59,7 +59,28 @@
         </button><br>
         <br>
       {{else}} 
+        <br>
         <p><a href="/logon">Log-on</a> to get to an extra "Update a Message" function on this Details screen.</p>
+        <br>
+      {{/if}}
+    </div>
+    <br>
+    <br>
+    <div id="deleteMessageDiv" class="bordered_section_body">
+      {{#if session.loggedIn}}
+        {{!-- href="/blog/user/{{session.loggedOnUserID}}"> --}}
+        <br>
+        <button id="deleteMessageTextButton" type="button" class="" onclick="deleteMessageTextButtonProcessing({{blogDetail.blog.id}});">
+          &nbsp;Delete this Blog Message&nbsp;
+        </button>&nbsp;&nbsp;
+        <button id="cancelDeleteMessageButton" type="button" onclick="cancelDeleteMessageButtonProcessing();">
+          &nbsp;Cancel&nbsp;<br>
+        </button><br>
+        <br>
+      {{else}} 
+        <br>
+        <p><a href="/logon">Log-on</a> to get to an extra "Delete a Comment" function on this Details screen.</p>
+        <br>
       {{/if}}
     </div>
     <br>
@@ -168,7 +189,8 @@
         <textarea id="addCommentTextField" class="commentTextField"></textarea>
         <br>&nbsp;
       </div>
-      <button id="addCommentTextButton" type="button" class="" onclick="addCommentTextButtonProcessing({{blogDetail.comment.id}});">
+      <button id="addCommentTextButton" type="button" class="" onclick="addCommentTextButtonProcessing();">
+        {{!-- {{blogDetail.comment.id}} --}}
         &nbsp;Add a New Comment to this Blog Message&nbsp;
       </button>
       <button id="saveAddCommentButton" type="button" onclick="saveAddCommentButtonProcessing();">
@@ -179,7 +201,9 @@
       </button><br>
       <br>
     {{else}} 
+      <br>
       <p><a href="/logon">Log-on</a> to get to an extra "Add a Comment" function on this Details screen.</p>
+      <br>
     {{/if}}
   </div>
   <br>
@@ -193,7 +217,8 @@
         <textarea id="updateCommentTextField" class="commentTextField"></textarea>
         <br>&nbsp;
       </div>
-      <button id="updateCommentTextButton" type="button" class="" onclick="updateCommentTextButtonProcessing({{blogDetail.comment.id}});">
+      <button id="updateCommentTextButton" type="button" class="" onclick="updateCommentTextButtonProcessing();">
+        {{!-- {{blogDetail.comment.id}} --}}
         &nbsp;Update a Specified Comment of this Blog Message (or of Another Known Blog) --->&nbsp;
       </button>&nbsp;&nbsp;&nbsp;&nbsp;
       &nbsp;&nbsp;Desired&nbsp;Comment&nbsp;ID&nbsp;(number):&nbsp;<input id="updateCommentIDField" class="" type="text" size="3"></input>
@@ -205,7 +230,31 @@
       </button><br>
       <br>
     {{else}} 
+      <br>
       <p><a href="/logon">Log-on</a> to get to an extra "Update a Comment" function on this Details screen.</p>
+      <br>
+    {{/if}}
+  </div>
+  <br>
+  <br>
+  <div id="deleteCommentDiv" class="bordered_section_body">
+    {{#if session.loggedIn}}
+      {{!-- href="/blog/user/{{session.loggedOnUserID}}"> --}}
+      <br>
+      <button id="deleteCommentTextButton" type="button" class="" onclick="deleteCommentTextButtonProcessing();">
+        {{!-- {{blogDetail.comment.id}} --}}
+        &nbsp;Delete a Specified Comment of this Blog Message (or of Another Known Blog) --->&nbsp;
+      </button>&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;Desired&nbsp;Comment&nbsp;ID&nbsp;(number):&nbsp;<input id="deleteCommentIDField" class="" type="text" size="3"></input>
+      &nbsp;&nbsp;
+      <button id="cancelDeleteCommentButton" type="button" onclick="cancelDeleteCommentButtonProcessing();">
+        &nbsp;Cancel&nbsp;
+      </button><br>
+      <br>
+    {{else}} 
+      <br>
+      <p><a href="/logon">Log-on</a> to get to an extra "Delete a Comment" function on this Details screen.</p>
+      <br>
     {{/if}}
   </div>
   <br>
@@ -375,6 +424,92 @@ updateMessageTextFieldDiv.style.display = "none";
 
 
 //////// END: UPDATE BLOG MESSAGE
+
+
+//////// BEGINNING: DELETE BLOG MESSAGE
+
+
+let deleteMessageTextButton = document.getElementById("deleteMessageTextButton");
+let cancelDeleteMessageButton = document.getElementById("cancelDeleteMessageButton");
+let deleteMessageID;
+deleteMessageTextButton.style.display = "inline";
+//deleteMessageButton.textContent = "&nbsp;Delete this Blog Message&nbsp;";
+cancelDeleteMessageButton.style.display = "none";
+
+
+async function deleteMessageTextButtonProcessing() {
+//alert("deleteMessageTextButtonProcessing()");
+if ({{blogDetail.blog.author_id}} == {{session.loggedOnUserID}}) {
+  deleteMessageTextButton.style.display = "inline";
+  cancelDeleteMessageButton.style.display = "inline";
+  if ((deleteMessageTextButton.innerHTML).trim() == "&nbsp;Delete this Blog Message&nbsp;") {
+    deleteMessageTextButton.innerHTML = "&nbsp;>>>>&nbsp;&nbsp;Confirm&nbsp;Delete&nbsp;&nbsp;<<<<&nbsp;";
+  }
+  else {  // deleteMessageTextButton.style.innerHTML = ">>>> Confirm Delete <<<<";
+    deleteMessageTextButton.innerHTML = "&nbsp;Delete this Blog Message&nbsp;";
+    cancelDeleteMessageButton.style.display = "none";
+    deleteMessageTextButtonDeletionProcessing({{blogDetail.blog.id}});
+  }
+  }
+else {
+  alert("ALERT: This blog message cannot be deleted by you because you are not the author of the message.");
+  cancelDeleteMessageButtonProcessing();
+}
+}
+
+
+async function deleteMessageTextButtonDeletionProcessing(passedBlogID) {
+//alert("deleteMessageTextButtonDeletionProcessing() for blog ID: " + passedBlogID);
+// Determine about if the current user is the author of the selected blog record and if so then enable access to the 
+// update-message button process functions; otherwise do not allow the deeper-level access.
+//alert("blogDetail.blog.author_id session.loggedOnUserID: " + {{blogDetail.blog.author_id}} + " " + {{session.loggedOnUserID}});
+if ({{blogDetail.blog.author_id}} == {{session.loggedOnUserID}}) {
+  let deleteBlogID = {{blogDetail.blog.id}};
+  try {
+    let fetchURL = "/api/blog/" + passedBlogID;
+    const response = await fetch(fetchURL, 
+    {
+      method: "DELETE",
+      headers: {"Content-Type": "application/json"}
+    });
+    //alert("fetchURL: " + JSON.stringify(fetchURL));
+    //console.log("RESPONSE STATUS (CLIENT): " + response.status);
+    if (await response.ok) {
+      //console.log("RESPONSE PROCESSING ON THE CLIENT");
+      let deleteMessageRecord = await response.json();
+      //console.log(deleteMessageRecord);
+      alert("Your selected blog message has successfully been deleted (ID: " + deleteBlogID + ").");
+        window.location.replace("/blog");
+        //window.location.reload();
+      }
+      else {
+        alert("ERROR: The requested blog message record could not be found or loaded or processed. Try again or contact Tech Support. " + 
+          "Also check about if your logon status timed-out.");
+        cancelDeleteMessageButtonProcessing();  
+      }
+      //
+  }
+  catch (err) {
+    console.log(err);
+    cancelDeleteMessageButtonProcessing();
+  }
+}
+else {
+  alert("ALERT: This blog message cannot be deleted by you because you are not the author of the message.");
+  cancelDeleteMessageButtonProcessing();
+}
+}
+
+
+function cancelDeleteMessageButtonProcessing() {
+//alert("cancelDeleteMessageButtonProcessing()");
+deleteMessageTextButton.style.display = "inline";
+deleteMessageTextButton.innerHTML = "&nbsp;Delete this Blog Message&nbsp;"
+cancelDeleteMessageButton.style.display = "none";
+}
+
+
+//////// END: DELETE BLOG MESSAGE
 
 
 //////// BEGINNING: ADD BLOG COMMENT
@@ -617,6 +752,127 @@ updateCommentTextFieldDiv.style.display = "none";
 
 
 //////// END: UPDATE BLOG COMMENT
+
+
+//////// BEGINNING: DELETE COMMENT TEXT
+
+
+let deleteCommentTextButton = document.getElementById("deleteCommentTextButton");
+let deleteCommentIDField = document.getElementById("deleteCommentIDField");
+let cancelDeleteCommentButton = document.getElementById("cancelDeleteCommentButton");
+let deleteCommentID;
+deleteCommentIDField.addEventListener("keydown", (event) => {
+  const keyName = event.key;
+  if (keyName === "Enter") {
+    deleteCommentTextButtonProcessing();
+  }
+});
+deleteCommentTextButton.style.display = "inline";
+//deleteCommentTextButton.innerHTML = "&nbsp;Delete a Specified Comment of this Blog Message (or of Another Known Blog) --->&nbsp;";
+cancelDeleteCommentButton.style.display = "none";
+//deleteCommentIDField.value = "";
+
+
+async function deleteCommentTextButtonProcessing() {
+//alert("deleteCommentTextButtonProcessing()");
+deleteCommentTextButton.style.display = "inline";
+cancelDeleteCommentButton.style.display = "inline";
+//alert(deleteCommentTextButton.innerHTML);
+if ((deleteCommentTextButton.innerHTML).trim() == "&nbsp;Delete a Specified Comment of this Blog Message (or of Another Known Blog) ---&gt;&nbsp;") {
+  deleteCommentTextButton.innerHTML = "&nbsp;>>>>&nbsp;&nbsp;Confirm&nbsp;Delete&nbsp;&nbsp;<<<<&nbsp;";
+}
+else if ((deleteCommentTextButton.innerHTML).trim() == "&nbsp;&gt;&gt;&gt;&gt;&nbsp;&nbsp;Confirm&nbsp;Delete&nbsp;&nbsp;&lt;&lt;&lt;&lt;&nbsp;") { 
+  deleteCommentTextButton.innerHTML = "&nbsp;Delete a Specified Comment of this Blog Message (or of Another Known Blog) ---&gt;&nbsp;";
+  cancelDeleteCommentButton.style.display = "none";
+  deleteCommentTextButtonDeletionProcessing();
+}
+}
+
+
+async function deleteCommentTextButtonDeletionProcessing() {
+//alert("deleteCommentTextButtonDeletionProcessing()");
+deleteCommentID = deleteCommentIDField.value;
+// Determine about if the current user is the author of the selected comment record and if so then enable access to the 
+// update-comment button process functions; otherwise do not allow the deeper-level access.
+if ((deleteCommentID != "") && (deleteCommentID != NaN) && (Number.isInteger(Math.abs(parseInt(deleteCommentID)))) && 
+  ((Math.abs(parseInt(deleteCommentID))) > 0)) {
+  deleteCommentID = Math.abs(parseInt(deleteCommentID));
+  //
+  try {
+    let fetchURL = "/blog/update/comment/" + deleteCommentID;
+    const loadCurrentCommentRecord = await fetch(fetchURL);
+    //alert("deleteCommentID: " + deleteCommentID + "; fetchURL: " + fetchURL);
+    const response = await fetch(fetchURL); 
+      if (await response.ok) {
+        let loadCurrentCommentRecord = await response.json();
+        //alert("loadCurrentCommentRecord.author_id session.loggedOnUserID: " + loadCurrentCommentRecord.author_id + " " + 
+        //  {{session.loggedOnUserID}});
+        if (parseInt(loadCurrentCommentRecord.author_id) == parseInt({{session.loggedOnUserID}})) {
+          //
+          let fetchURL = ("/api/blog/comment/" + deleteCommentID);
+          //console.log("to-server fetchURL: " + fetchURL);  
+          try {
+            //alert("DELETE PROCESSING OCCURS AT NOW.");
+            const response = await fetch(fetchURL, {
+              method: "DELETE", 
+              headers: {"Content-Type": "application/json"}
+              }); 
+              if (await response.ok) {
+                let deleteCommentRecord = await response.json();
+                deleteCommentID = deleteCommentIDField.value;
+                deleteCommentIDField.value = "";
+                alert("Your selected blog comment has successfully been deleted (ID: " + deleteCommentID + ").");
+                window.location.replace("/blog/detail/" + {{blogDetail.blog.id}});
+                //window.location.reload();
+              }
+              else {
+                console.log(err);
+                alert("ERROR: The requested comment record could not be found or processed. Re-check the ID number and try again. " + 
+                  "Or contact Tech Support. Also check about if your logon status timed-out.");
+                cancelDeleteCommentButtonProcessing();
+              }
+          }
+          catch (err) {
+            console.log(err);
+            alert("ERROR: The requested comment record could not be found or processed. Re-check the ID number and try again. " + 
+              "Or contact Tech Support. Also check about if your logon status timed-out.");
+            cancelDeleteCommentButtonProcessing();
+          }
+        }
+        else {
+          alert("ALERT: The specified blog comment cannot be deleted by you because you are not the author of the comment.");
+          cancelDeleteCommentButtonProcessing();
+        }
+      }
+      else {
+        console.log(err);
+        alert("ERROR: The requested comment record could not be found or processed. Re-check the ID number and try again. " + 
+          "Or contact Tech Support. Also check about if your logon status timed-out.");
+        cancelDeleteCommentButtonProcessing();
+      }
+  }
+  catch (err) {
+    console.log(err);
+    cancelDeleteCommentButtonProcessing();
+  }
+}
+else {
+  alert("ERROR: A comment ID must be specified. The specified ID must be an integer number that is greater than 0.");
+  cancelDeleteCommentButtonProcessing();
+}
+}
+
+
+function cancelDeleteCommentButtonProcessing() {
+alert("cancelDeleteMessageButtonProcessing()");
+deleteCommentTextButton.style.display = "inline";
+deleteCommentTextButton.innerHTML = "&nbsp;Delete a Specified Comment of this Blog Message (or of Another Known Blog) ---&gt;&nbsp;"
+deleteCommentIDField.value = "";
+cancelDeleteCommentButton.style.display = "none";
+}
+
+
+//////// END: DELETE COMMENT TEXT
 
 
 </script>

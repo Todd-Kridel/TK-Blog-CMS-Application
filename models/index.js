@@ -12,12 +12,14 @@ const Blog_Comment = require("./Blog_Comment");  // for the "Blog_Comment" table
 
 // for the one-to-many relationship with the "Blog" table
 User.hasMany(Blog, {
-  foreignKey: "author_id"
+  foreignKey: "author_id", 
+  onDelete: "CASCADE"  // or onDelete="CASCADE" ?
 });
   
 // for the one-to-many relationship with the "Blog_Comment" table
 User.hasMany(Blog_Comment, {
-  foreignKey: "author_id"
+  foreignKey: "author_id", 
+  onDelete: "CASCADE"  // or onDelete="CASCADE" ?
 });
 
 
@@ -38,12 +40,14 @@ User.hasMany(Blog_Comment, {
 
 // for the one-to-many relationship with the "User" table
 Blog.belongsTo(User, {
-  foreignKey: "author_id"
+  foreignKey: "author_id", 
+  onDelete: "CASCADE"  // or onDelete="CASCADE" ?
 });
 
 // for the one-to-many relationship with the "Blog_Comment" table
 Blog.hasMany(Blog_Comment, { 
-  foreignKey: "blog_id"
+  foreignKey: "blog_id", 
+  onDelete: "CASCADE"  // or onDelete="CASCADE" ?
 });
 
 
@@ -51,7 +55,8 @@ Blog.hasMany(Blog_Comment, {
 
 // for the many-to-one relationship with the "User" table
 Blog_Comment.belongsTo(User, {
-  foreignKey: "author_id"
+  foreignKey: "author_id", 
+  onDelete: "CASCADE"  // or onDelete="CASCADE" ?
 });
 
 

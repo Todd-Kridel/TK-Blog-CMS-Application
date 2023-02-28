@@ -174,27 +174,27 @@ catch (err) {
 });
 
 
-// FUTURE ENHANCEMENT
 // DELETE a blog record.
-// router.delete("/:id", async (req, res) => {  // check for authentication?
-// try {
-//   const blogData = await Blog.destroy({
-//     where: {id: req.params.id}
-//   });
-//   if (blogData) {
-//     res.status(200).json({"message": "The selected blog record was deleted."});
-//     return;
-//   }
-//   else {
-//     res.status(404).json({"message": "There are not any records that match the selected criteria."});
-//     return;
-//   }
-// } 
-// catch (err) {
-//   res.status(500).json(err);
-//   return;
-// }
-// });
+router.delete("/:id", async (req, res) => {  // check for authentication?
+try {
+  const blogData = await Blog.destroy({
+    where: {id: req.params.id}
+  });
+  if (blogData) {
+    res.status(200).json(blogData);
+    // res.status(200).json({"message": "The selected blog record was deleted."});
+    return;
+  }
+  else {
+    res.status(404).json({"message": "There are not any records that match the selected criteria."});
+    return;
+  }
+} 
+catch (err) {
+  res.status(500).json(err);
+  return;
+}
+});
 
 
 module.exports = router;
