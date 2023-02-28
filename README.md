@@ -76,7 +76,7 @@ Note: For steps 4 and 5: Alternatively the "npm run seed" and "npm start" comman
 
 ## Usage and Features
 
-The application is a server-based interactive full-stack system that cannot run in a full-usage mode that cannot be run in the GitHub Pages platform. The usage of the application required that it be deployed to the Heroku hosting system at the URL ![]>https://tk-blog-cms-application.herokuapp.com. The following GitHut Pages deployment webpage shows some pictures that are a non-interactive preview of many of the application screen: "![]https://todd-kridel.github.io/TK-Blog-CMS-Application".
+The application is a server-based interactive full-stack system that cannot run in a full-usage mode that cannot be run in the GitHub Pages platform. The usage of the application required that it be deployed to the Heroku hosting system at the URL "https://tk-blog-cms-application.herokuapp.com". The following GitHut Pages deployment webpage shows some pictures that are a non-interactive preview of many of the application screen: "https://todd-kridel.github.io/TK-Blog-CMS-Application".
 
 To use this application/webpage...at after when installing the application and its database and then using the "node server" command or the "npm start" command to start the application...
 
