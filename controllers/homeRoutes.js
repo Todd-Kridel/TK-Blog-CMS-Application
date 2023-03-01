@@ -115,7 +115,9 @@ try {
     res.render("blog-detail", {blogDetail});
   } 
   else {
-    res.status(400).json({"message": "There are not any records that match the selected search criteria."});
+    res.status(400).redirect("/blog/gallery/id");
+    //res.status(400);
+    //res.status(400).json({"message": "There are not any records that match the selected search criteria."});
     return;
   }
 }
