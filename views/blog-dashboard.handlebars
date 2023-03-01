@@ -60,9 +60,24 @@
   <p>Post Date: {{blog.post_date}}</p>
   <p>Blog ID: {{blog.id}}</p>
   <br>
-  <p>Message Text:&nbsp;&nbsp;&nbsp;&nbsp;[ Access the Blog Detail screen by way of the "Title" link at above to view or/and update existing blog main message text; Add new messages on the <a href="/blog">Blog Gallery</a> screen. ]</p>
+  <p>Message Text (a partial preview):&nbsp;&nbsp;&nbsp;&nbsp;
+    <span 
+      title="Note: Click the Title link to view more detail about this blog record: full expanded Message text and associated Comment text (if any)." 
+      style="text-decoration: underline;">
+      (&nbsp;Click&nbsp;the&nbsp;title&nbsp;link&nbsp;at&nbsp;above&nbsp;for&nbsp;more information.&nbsp;)
+    </span>
+  </p>
+  <p class="message_text_area_gallery_div">{{blog.message_text}}</p>
+  <p>(Access the Blog Detail screen by way of the "Title" link at above to view or/and update existing blog main message text; Add new messages on the <a href="/blog">Blog Gallery</a> screen.)</p>
   <br>
-  <p>Comment Text (if any):&nbsp;&nbsp;&nbsp;&nbsp;[ Access the Blog Detail screen to view or/and add or/and update comments for blog records; or Access the <a href="#blogCommentsDiv">"Comments"</a> section of this screen for a summary of your comments. ]</p>
+  <p>Comment Text (if any):&nbsp;&nbsp;&nbsp;&nbsp;
+    <span 
+      title="Note: Click the Title link to view more detail about this blog record: full expanded Message text and associated Comment text (if any)." 
+      style="text-decoration: underline;">
+      (&nbsp;Click&nbsp;the&nbsp;title&nbsp;link&nbsp;at&nbsp;above&nbsp;for&nbsp;more information.&nbsp;)
+    </span>
+  </p>
+  <p>(Access the Blog Detail screen to view or/and add or/and update comments for blog records; or Access the <a href="#blogCommentsDiv">"Comments"</a> section of this screen for a summary of your comments.)</p>
   <br>
   <br>
   <button type="button" class="" onclick="window.scrollTo(0, 0);">
@@ -121,7 +136,15 @@
         </span>
       </p>
       <br>
-      <p class="">Blog Comment Text:&nbsp;&nbsp;&nbsp;&nbsp;[ Access the "Blog Detail" screen by way of the ID link at above to view or/and add or/and update comments of blog records. ]</p>
+      <p>Comment Text (a partial preview):&nbsp;&nbsp;&nbsp;&nbsp;
+        <span 
+          title="Note: Click the Title link to view more detail about this blog record: full expanded Message text and associated Comment text (if any)." 
+          style="text-decoration: underline;">
+          (&nbsp;Click&nbsp;the&nbsp;title&nbsp;link&nbsp;at&nbsp;above&nbsp;for&nbsp;more information.&nbsp;)
+        </span>
+      </p>
+      <p class="message_text_area_gallery_div"> {{Comment.comment_text}}</p>
+      <p>(Access the "Blog Detail" screen by way of the ID link at above to view or/and add or/and update comments of blog records.)</p>
       <br>
       <button type="button" class="" onclick="window.location.href = '#blogCommentsDiv'">
         &nbsp;Go to the Top of this Comment List&nbsp;
